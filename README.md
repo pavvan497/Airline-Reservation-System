@@ -1,8 +1,11 @@
 # Airline Reservation Management System
 
+Repository Owner: [pavvan497](https://github.com/pavvan497)  
+Repository Link: [https://github.com/pavvan497/Airline-Reservation-System.git](https://github.com/pavvan497/Airline-Reservation-System.git)
+
 The Airline Reservation Management System is a web-based application that streamlines the process of flight booking and reservation management. It offers a convenient interface for users to search and book flights, check available seats, manage reservations, and handle cancellations. The system also provides airline administrators with tools to manage flights, seat availability, and passenger information.
 
-![Screenshot (289)](https://github.com/ImeshaDilshani/Airline-Reservation-Management-System/assets/93858302/28855982-352a-4b09-a0a5-d7aa8bcf6c5f)
+![Project Screenshot](src/main/resources/static/images/bg.png)
 
 
 ## Features
@@ -21,8 +24,8 @@ The Airline Reservation Management System is a web-based application that stream
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/ImeshaDilshani/Airline-Reservation-Management-System.git
-cd Airline-Reservation-Management-System
+git clone https://github.com/pavvan497/Airline-Reservation-System.git
+cd Airline-Reservation-System
 ```
 ### Database Setup
 Create a MySQL database and import the provided schema to set up the necessary tables.
