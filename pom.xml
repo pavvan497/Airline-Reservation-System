@@ -8,7 +8,7 @@
         <version>3.0.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.JKShian</groupId>
+    <groupId>com.pavan</groupId>
     <artifactId>ARMS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ARMS</name>
