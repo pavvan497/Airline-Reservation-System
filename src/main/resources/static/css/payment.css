@@ -1,62 +1,170 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  padding: 28px;
+  position: relative;
+}
 
-    background-color: rgb(255, 255, 255);
-    opacity: 0.6;
-  }
-    
-  
-  h1 {
-    text-align: center;
-  }
-  
-  h2 {
-    margin-bottom: 10px;
-  }
- 
-  .booking-details, .payment-method {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 20px;
-    
-  }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(12, 34, 46, 0.76), rgba(14, 73, 86, 0.42));
+}
 
-  
-  .payment-method form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .payment-method label, .payment-method input {
-    margin-bottom: 10px;
-  }
-  
-  .payment-method button {
-    background-color: #19A7CE; 
+.container {
+  position: relative;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 32px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(14px);
+}
+
+h1 {
+  margin: 0;
+  color: #17313a;
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  text-align: center;
+}
+
+.page-subtitle {
+  margin: 12px auto 22px;
+  max-width: 760px;
+  color: #506771;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+h2 {
+  margin-top: 0;
+  color: #17313a;
+}
+
+.booking-details,
+.payment-method {
+  border: 1px solid rgba(23, 49, 58, 0.12);
+  border-radius: 22px;
+  padding: 22px;
+  margin-bottom: 20px;
+  background: rgba(248, 251, 252, 0.96);
+}
+
+.booking-details p {
+  color: #244552;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.payment-method form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-method label {
+  color: #244552;
+  font-weight: 700;
+}
+
+.payment-method input {
+  border-radius: 16px;
+  border: 1px solid rgba(23, 49, 58, 0.16);
+  padding: 13px 14px;
+  font-size: 0.96rem;
+  background: #ffffff;
+}
+
+.payment-method input:focus {
+  outline: 2px solid rgba(13, 139, 122, 0.18);
+  border-color: rgba(13, 139, 122, 0.45);
+}
+
+.payment-method button {
+  background: linear-gradient(135deg, #0d8b7a, #12a2a5);
   border: none;
-  border-radius: 12px;
+  border-radius: 18px;
   color: white;
-  padding: 10px;
+  padding: 15px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 18px 30px rgba(13, 139, 122, 0.25);
+}
+
+.payment-method button:hover {
+  background: linear-gradient(135deg, #09695d, #0d7c8e);
+}
+
+.demo-notice,
+.success-message {
+  padding: 14px 16px;
+  border-radius: 16px;
+  margin-bottom: 18px;
+  line-height: 1.6;
+}
+
+.demo-notice {
+  background: rgba(255, 243, 205, 0.92);
+  border: 1px solid #f0c36d;
+  color: #7c5900;
+}
+
+.success-message {
+  background: rgba(219, 255, 227, 0.92);
+  border: 1px solid #80c497;
+  color: #185c2d;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-link {
+  background: linear-gradient(135deg, #0d8b7a, #12a2a5);
+  border: none;
+  border-radius: 18px;
+  color: white;
+  padding: 13px 20px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.96rem;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 18px 30px rgba(13, 139, 122, 0.22);
+}
+
+.action-link:hover {
+  background: linear-gradient(135deg, #09695d, #0d7c8e);
+}
+
+#payment-message {
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 16px;
   }
-  
-  
-    
-  .payment-method button:hover {
-    background-color: #146C94;
+
+  .container {
+    padding: 24px 18px;
   }
-  
+
+  .confirmation-actions {
+    flex-direction: column;
+  }
+}

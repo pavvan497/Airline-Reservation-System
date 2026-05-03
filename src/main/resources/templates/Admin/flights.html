@@ -1,216 +1,138 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.w3.org/1999/xhtml" >
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>JKshian</title>
-    <!-- Bootstrap core CSS     -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"  href="../../static/css/bootstrap.min.css">
-    <!-- Animation library for notifications   -->
-    <link rel="stylesheet" th:href="@{/css/animate.min.css}"  href="../../static/css/animate.min.css" >
-    <!--  Light Bootstrap Table core CSS    -->
-    <link rel="stylesheet" th:href="@{/css/light-bootstrap-dashboard.css?v=1.4.0}" href="../../static/css/light-bootstrap-dashboard.css?v=1.4.0" >
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link rel="stylesheet" th:href="@{/css/demo.css}"  href="../../static/css/demo.css" >
-    <!--     Fonts and icons     -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}"  href="../../static/css/pe-icon-7-stroke.css"  >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flights</title>
+    <link rel="stylesheet" href="/css/admin-portal.css" th:href="@{/css/admin-portal.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
-<body>
-<div class="wrapper">
-    <div class="sidebar" data-color="green" data-image="../static/images/sb2.jpeg" th:data-image="@{/images/sb2.jpeg}" >
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="https://github.com/ImeshaDilshani/Airline-Reservation-Management-System.git" class="simple-text">
-                    <i class="fas fa-plane" aria-hidden="true"></i>
-                    JKshian
-                </a>
-            </div>
-            <ul class="nav">
-                <li>
-                    <a href="dashboard.html">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <p>dashboard</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="passenger.html">
-                        <i class="fa-solid fa-user"></i>
-                        <p>Passengers</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="flights.html">
-                        <i class="fa-solid fa-plane"></i>
-                        <p>Flights</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="notifications.html">
-                        <i class="fa-regular fa-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li class="active-pro">
-                    <a href="user.html">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <p>Log Out</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="main-panel">
-        <nav class="navbar navbar-default navbar-fixed">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
+<body class="admin-body" data-admin-section="flights">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <a class="admin-brand" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html">
+            <span class="admin-brand-badge"><i class="fa-solid fa-plane-departure"></i></span>
+            <span class="admin-brand-copy">
+                <h1>JKshian Admin</h1>
+                <p>Flight operations desk</p>
+            </span>
+        </a>
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-globe"></i>
-                                <b class="caret hidden-lg hidden-md"></b>
-                                <p class="hidden-lg hidden-md">
-                                    5 Notifications
-                                    <b class="caret"></b>
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Flight</a></li>
-                                <li><a href="#">Booking</a></li>
-                                <li><a href="#">Crew</a></li>
-                                <li><a href="#">Passenger</a></li>
-                                <li><a href="#">Maintenance</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa fa-search"></i>
-                                <p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="user.html">
-                                <p>MAndew23</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <p>new
-                                    <b class="caret"></b>
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Flight Updates</a></li>
-                                <li><a href="#">Booking Confirmations</a></li>
-                                <li><a href="#">Crew Assignments</a></li>
-                                <li><a href="#">Payment Status</a></li>
-                                <li><a href="#">Task Completion</a></li>
-                                <li><a href="#">Seat Availability</a></li>
-                                <li><a href="#">Passenger Feedback</a></li>
-                            </ul>
-                        </li>
-                        <li class="separator hidden-lg"></li>
-                    </ul>
-                </div>
-            </div>
+        <nav class="admin-nav">
+            <a class="admin-nav-link" data-nav="dashboard" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+            <a class="admin-nav-link" data-nav="passengers" th:href="@{/admin/passenger.html}" href="/admin/passenger.html"><i class="fa-solid fa-users"></i><span>Passengers</span></a>
+            <a class="admin-nav-link" data-nav="flights" th:href="@{/admin/flights.html}" href="/admin/flights.html"><i class="fa-solid fa-plane"></i><span>Flights</span></a>
+            <a class="admin-nav-link" data-nav="payments" th:href="@{/admin/paymentinfo.html}" href="/admin/paymentinfo.html"><i class="fa-solid fa-credit-card"></i><span>Payments</span></a>
+            <a class="admin-nav-link" data-nav="notifications" th:href="@{/admin/notifications.html}" href="/admin/notifications.html"><i class="fa-regular fa-bell"></i><span>Notifications</span></a>
+            <a class="admin-nav-link" data-nav="account" th:href="@{/admin/user.html}" href="/admin/user.html"><i class="fa-regular fa-id-badge"></i><span>Admin Account</span></a>
+            <button class="admin-logout" type="button" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></button>
         </nav>
-			<div id="#myscroll" class="container" style="margin-left: 0;margin-top: 5rem; float: right; width:80%; padding: 0 5rem 0 5rem">
-			<h2>Manage Flights</h2>
-			 <hr>
-				<div>
-					<button class="btn btn-primary" style="background-color: dodgerblue;">
-                        <a href="newflight.html" style="color: white">
-                        <i class="fa fa-plus"></i> New Flight</a></button>
-				</div>
-				<br>
 
-                <br><br>
-                <table>
-                    <tr>
-                        <th>Fight No </th>
-                        <th>From </th>
-                        <th>To </th>
-                        <th>Available Seats </th>
-                        <th>KM </th>
-
-                    </tr>
-
-                    <tr th:each="i:${stuList}">
-
-                        <td th:text="${i.id}"></td>
-                        <td th:text="${i.start}"></td>
-                        <td th:text="${i.end}"></td>
-                        <td th:text="${i.avlSeat}"></td>
-                        <td th:text="${i.numOfKm}"></td>
-
-                    </tr>
-                </table>
-
-				  <ul class="pagination">
-					  <li ><a href="#">&laquo;</a></li>
-					  <li class="active"><a href="#">1</a></li>
-					  <li><a href="#">2</a></li>
-					  <li><a href="#">3</a></li>
-					  <li><a href="#">4</a></li>
-					  <li><a href="#">5</a></li>
-					  <li><a href="#">&raquo;</a></li>
-					</ul>
-			</div>
-
-				<div class="modal small fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h3 id="myModalLabel">Delete Confirmation</h3>
-						</div>
-						<div class="modal-body">
-							<p class="error-text"><i class="fa fa-warning modal-icon"></i> Are you sure you want to delete the Flight?<br>This cannot be undone.</p>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-							<button class="btn btn-danger" data-dismiss="modal">Delete</button>
-						</div>
-					  </div>
-					</div>
-				</div>
-    </div>
-</div>
-    <footer class="footer">
-        <div class="container-fluid">
-            <p class="copyright pull-right">
-                &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/ImeshaDilshani/Airline-Reservation-Management-System.git">JKshian</a>, Connecting People, Places, And Cultures.
-            </p>
+        <div class="admin-sidebar-card">
+            <p>Route count</p>
+            <h3 th:text="${totalFlights}">0</h3>
         </div>
-    </footer>
-	</body>
-    <!--   Core JS Files   -->
-    <script src="../../static/js/jquery.3.2.1.min.js" th:src="@{/js/jquery.3.2.1.min.js}" type="text/javascript"></script>
-    <script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
-    <!--  Charts Plugin -->
-    <script src="../../static/js/chartist.min.js" th:src="@{/js/chartist.min.js}"></script>
-    <!--  Notifications Plugin    -->
-    <script src="../../static/js/bootstrap-notify.js" th:src="@{/js/bootstrap-notify.js}"></script>
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-    <script src="../../static/js/light-bootstrap-dashboard.js?v=1.4.0" src="@{/js/light-bootstrap-dashboard.js?v=1.4.0}"></script>
-    <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-    <script src="../../static/js/demo.js" src="@{/js/demo.js}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            demo.initChartist();
-        });
-    </script>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <p class="admin-kicker">Flight management</p>
+                <h1>Available Flights</h1>
+                <p>These records power the public route selection and booking flow.</p>
+            </div>
+
+            <div class="admin-user-panel">
+                <p>Signed in as admin</p>
+                <strong data-admin-email>admin@arms.com</strong>
+            </div>
+        </div>
+
+        <section class="admin-grid">
+            <article class="stat-card span-4">
+                <p>Active flights</p>
+                <h2 th:text="${totalFlights}">0</h2>
+                <small>Routes currently visible to passengers.</small>
+            </article>
+            <article class="stat-card span-4">
+                <p>Low-seat routes</p>
+                <h2 th:text="${lowSeatCount}">0</h2>
+                <small>Flights that are close to filling up.</small>
+            </article>
+            <article class="stat-card span-4">
+                <p>Total bookings</p>
+                <h2 th:text="${totalBookings}">0</h2>
+                <small>Completed reservations across all routes.</small>
+            </article>
+
+            <section class="admin-card span-8">
+                <div class="admin-card-header">
+                    <div>
+                        <h2>Flight inventory</h2>
+                        <p>Live route list with seat availability and distance data.</p>
+                    </div>
+                    <a class="admin-button" th:href="@{/admin/newflight.html}" href="/admin/newflight.html"><i class="fa-solid fa-plus"></i> Add flight</a>
+                </div>
+
+                <div th:if="${successMessage}" class="admin-banner" th:text="${successMessage}">
+                    Flight added successfully.
+                </div>
+
+                <div th:if="${#lists.isEmpty(flights)}" class="admin-empty">
+                    No flights are configured yet. Add a route to make it available on the customer-facing site.
+                </div>
+
+                <div th:unless="${#lists.isEmpty(flights)}" class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                        <tr>
+                            <th>Flight ID</th>
+                            <th>Route</th>
+                            <th>Available seats</th>
+                            <th>Distance</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="flight : ${flights}">
+                            <td th:text="${flight.id}">1</td>
+                            <td><span class="route-badge" th:text="${flight.start + ' -> ' + flight.end}">Delhi -> Mumbai</span></td>
+                            <td th:text="${flight.avlSeat}">100</td>
+                            <td th:text="${flight.numOfKm + ' km'}">1400 km</td>
+                            <td>
+                                <span th:if="${flight.avlSeat > 25}" class="status-badge ok">Healthy</span>
+                                <span th:if="${flight.avlSeat <= 25 and flight.avlSeat > 15}" class="status-badge warn">Watch</span>
+                                <span th:if="${flight.avlSeat <= 15}" class="status-badge danger">Low seats</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="admin-card span-4">
+                <div class="admin-card-header">
+                    <div>
+                        <h3>Low-seat watchlist</h3>
+                        <p>Routes that may need attention soon.</p>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(lowSeatFlights)}" class="admin-empty">
+                    All flights currently have comfortable seat availability.
+                </div>
+
+                <ul th:unless="${#lists.isEmpty(lowSeatFlights)}" class="admin-list">
+                    <li th:each="flight : ${lowSeatFlights}">
+                        <strong th:text="${flight.start + ' -> ' + flight.end}">Goa -> Pune</strong>
+                        <span th:text="${flight.avlSeat + ' seats left'}">10 seats left</span>
+                    </li>
+                </ul>
+            </section>
+        </section>
+    </main>
+</div>
+
+<script src="/js/admin-portal.js" th:src="@{/js/admin-portal.js}"></script>
+</body>
 </html>

@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Airline Reservation Payment</title>
-  <link rel="stylesheet" href="../../static/css/payment.css">
+  <link rel="stylesheet" href="/css/payment.css" th:href="@{/css/payment.css}">
 </head>
-<body style="background-image: url('../../static/images/bg.png')">
+<body style="background-image: url('/images/bg.png')">
   <div class="container">
-    <h1>Payment Information</h1>
+    <h1>Demo Payment Only</h1>
+    <p class="page-subtitle">This step confirms the booking with dummy payment details and then generates a booking reference for testing.</p>
+    <p class="demo-notice">This screen is for testing only. Any card details entered here are treated as dummy data and no real money is charged.</p>
     <div class="booking-details">
       <h2>Booking Details</h2>
-      <p><strong>Airplane Type:</strong> <span id="airplane-type"></span></p>
-      <p><strong>Departure Time:</strong> <span id="departure-time"></span></p>
+      <p><strong>Airplane Type:</strong> <span id="airplane-type">Available flight</span></p>
+      <p><strong>Departure Time:</strong> <span id="departure-time">Assigned at confirmation</span></p>
       <p><strong>Start Place:</strong> <span id="start-place"></span></p>
       <p><strong>Destination:</strong> <span id="destination"></span></p>
       <p><strong>No. of Tickets:</strong> <span id="ticket-count"></span></p>
-      <p><strong>Ticket Numbers:</strong> <span id="ticket-numbers"></span></p>
-      <p><strong>Ticket Price:</strong> <span id="ticket-price"></span></p>
+      <p><strong>Ticket Numbers:</strong> <span id="ticket-numbers">Generated after booking</span></p>
+      <p><strong>Estimated Total Price:</strong> <span id="ticket-price"></span></p>
     </div>
     <div class="payment-method">
-      <h2>Payment Method</h2>
+      <h2>Demo Card Entry</h2>
       <form id="payment-form">
         <label for="card-holder">Card Holder's Name</label>
         <input type="text" id="card-holder" required>
@@ -34,12 +36,13 @@
         <label for="cvv">CVV</label>
         <input type="text" id="cvv" required>
 
-        <button class = "buttonsub" type="submit">Pay Now</button>
+        <button class = "buttonsub" type="submit">Confirm Demo Booking</button>
       </form>
+      <div id="payment-message" style="margin-top: 1rem;"></div>
     </div>
   </div>
 
 
-  <script src="../../static/js/payment.js"></script>
+  <script src="/js/payment.js" th:src="@{/js/payment.js}"></script>
 </body>
 </html>

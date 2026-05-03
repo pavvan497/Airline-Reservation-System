@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "4A614E645266556A586E3272357538782F413F4428472B4B6250655368566B59";
+    private static final String SECRET_KEY =
+            "QWlybGluZVJlc2VydmF0aW9uTWFuYWdlbWVudFN5c3RlbVNlY3JldEtleTEyMzQ1Njc4OTA=";
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
     }
@@ -41,7 +42,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

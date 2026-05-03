@@ -1,0 +1,144 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------------< com.JKShian:ARMS >--------------------------
+[INFO] Building ARMS 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot-maven-plugin:3.0.1:run (default-cli) > test-compile @ ARMS >>>
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.0:resources (default-resources) @ ARMS ---
+[INFO] Copying 1 resource
+[INFO] Copying 64 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ ARMS ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 26 source files to D:\edi_sem6\ARMS\Piyush_spring\Airline-Reservation-Management-System\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.0:testResources (default-testResources) @ ARMS ---
+[INFO] skip non existing resourceDirectory D:\edi_sem6\ARMS\Piyush_spring\Airline-Reservation-Management-System\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ ARMS ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to D:\edi_sem6\ARMS\Piyush_spring\Airline-Reservation-Management-System\target\test-classes
+[INFO] 
+[INFO] <<< spring-boot-maven-plugin:3.0.1:run (default-cli) < test-compile @ ARMS <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.0.1:run (default-cli) @ ARMS ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.1)
+
+2026-04-30T00:14:03.108+05:30  INFO 5836 --- [           main] com.jkshian.arms.ArmsApplication         : Starting ArmsApplication using Java 17.0.12 with PID 5836 (D:\edi_sem6\ARMS\Piyush_spring\Airline-Reservation-Management-System\target\classes started by pavan in D:\edi_sem6\ARMS\Piyush_spring\Airline-Reservation-Management-System)
+2026-04-30T00:14:03.112+05:30  INFO 5836 --- [           main] com.jkshian.arms.ArmsApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-04-30T00:14:04.191+05:30  INFO 5836 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-30T00:14:04.260+05:30  INFO 5836 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 3 JPA repository interfaces.
+2026-04-30T00:14:05.005+05:30  INFO 5836 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2026-04-30T00:14:05.020+05:30  INFO 5836 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-30T00:14:05.021+05:30  INFO 5836 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.4]
+2026-04-30T00:14:05.133+05:30  INFO 5836 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-30T00:14:05.136+05:30  INFO 5836 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1944 ms
+2026-04-30T00:14:05.356+05:30  INFO 5836 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-30T00:14:05.462+05:30  INFO 5836 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.6.Final
+2026-04-30T00:14:05.702+05:30  WARN 5836 --- [           main] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2026-04-30T00:14:05.847+05:30  INFO 5836 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-30T00:14:06.422+05:30  INFO 5836 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@30ec211a
+2026-04-30T00:14:06.425+05:30  INFO 5836 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-30T00:14:06.488+05:30  INFO 5836 --- [           main] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2026-04-30T00:14:07.394+05:30  INFO 5836 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-04-30T00:14:07.401+05:30  INFO 5836 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-30T00:14:08.111+05:30  WARN 5836 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-30T00:14:08.375+05:30  INFO 5836 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3f7b15bb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2dacad1d, org.springframework.security.web.context.SecurityContextHolderFilter@59b8a801, org.springframework.security.web.header.HeaderWriterFilter@67263db7, org.springframework.security.web.authentication.logout.LogoutFilter@72364a40, com.jkshian.arms.config.JwtAuthenticationFilter@261609a7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@42365c82, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@46c47690, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@15a87fbb, org.springframework.security.web.session.SessionManagementFilter@14ea3ecf, org.springframework.security.web.access.ExceptionTranslationFilter@157ff8f8, org.springframework.security.web.access.intercept.AuthorizationFilter@15d0f2a3]
+2026-04-30T00:14:08.629+05:30  INFO 5836 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2026-04-30T00:14:08.638+05:30  INFO 5836 --- [           main] com.jkshian.arms.ArmsApplication         : Started ArmsApplication in 6.0 seconds (process running for 6.43)
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select a1_0.id from airplane a1_0 where upper(a1_0.start)=upper(?) and upper(a1_0.end)=upper(?) limit ?
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+2026-04-30T00:14:23.051+05:30  INFO 5836 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-30T00:14:23.052+05:30  INFO 5836 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-30T00:14:23.053+05:30  INFO 5836 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 where lower(trim(BOTH from a1_0.start))=lower(trim(BOTH from ?)) and lower(trim(BOTH from a1_0.end))=lower(trim(BOTH from ?))
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 where lower(trim(BOTH from a1_0.start))=lower(trim(BOTH from ?)) and lower(trim(BOTH from a1_0.end))=lower(trim(BOTH from ?))
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0 order by b1_0.id desc
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.avl_seat asc
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.avl_seat asc
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0 order by b1_0.id desc
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0 order by b1_0.id desc
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.avl_seat asc
+Hibernate: select b1_0.id,b1_0.b_end,b1_0.b_num_ofseat,b1_0.b_start,b1_0.booking_reference,b1_0.price,b1_0.ticket_number,b1_0.user_email from booking b1_0
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 order by a1_0.start asc,a1_0.end asc,a1_0.id asc
+Hibernate: select u1_0.id,u1_0.email,u1_0.first_name,u1_0.last_name,u1_0.password,u1_0.role from user u1_0 where u1_0.email=?
+Hibernate: select a1_0.id,a1_0.avl_seat,a1_0.end,a1_0.num_of_km,a1_0.start from airplane a1_0 where lower(trim(BOTH from a1_0.start))=lower(trim(BOTH from ?)) and lower(trim(BOTH from a1_0.end))=lower(trim(BOTH from ?))
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  07:10 min
+[INFO] Finished at: 2026-04-30T00:21:02+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.0.1:run (default-cli) on project ARMS: Process terminated with exit code: -1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

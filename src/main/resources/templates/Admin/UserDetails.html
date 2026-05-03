@@ -1,181 +1,109 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.w3.org/1999/xhtml" >
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>User Details</title>
-    <!-- Bootstrap core CSS     -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"  href="../../static/css/bootstrap.min.css">
-    <!-- Animation library for notifications   -->
-    <link rel="stylesheet" th:href="@{/css/animate.min.css}"  href="../../static/css/animate.min.css" >
-    <!--  Light Bootstrap Table core CSS    -->
-    <link rel="stylesheet" th:href="@{/css/light-bootstrap-dashboard.css?v=1.4.0}" href="../../static/css/light-bootstrap-dashboard.css?v=1.4.0" >
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link rel="stylesheet" th:href="@{/css/demo.css}"  href="../../static/css/demo.css" >
-    <!--     Fonts and icons     -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}"  href="../../static/css/pe-icon-7-stroke.css"  >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passengers</title>
+    <link rel="stylesheet" href="/css/admin-portal.css" th:href="@{/css/admin-portal.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
-<body>
-<div class="wrapper">
-    <div class="sidebar" data-color="green" data-image="../static/images/sb2.jpeg" th:data-image="@{/images/sb2.jpeg}" >
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="https://github.com/ImeshaDilshani/Airline-Reservation-Management-System.git" class="simple-text">
-                    <i class="fas fa-plane" aria-hidden="true"></i>
-                    JKshian
-                </a>
-            </div>
-            <ul class="nav">
-                <li >
-                    <a href="dashboard.html">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="UserDetails.html">
-                        <i class="fa-solid fa-user"></i>
-                        <p>Passengers</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="flights.html">
-                        <i class="fa-solid fa-plane"></i>
-                        <p>Flights</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="notifications.html">
-                        <i class="fa-regular fa-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li class="active-pro">
-                    <a href="user.html">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <p>Log Out</p>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="main-panel">
-        <nav class="navbar navbar-default navbar-fixed">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-globe"></i>
-                                <b class="caret hidden-lg hidden-md"></b>
-                                <p class="hidden-lg hidden-md">
-                                    5 Notifications
-                                    <b class="caret"></b>
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Flight</a></li>
-                                <li><a href="#">Booking</a></li>
-                                <li><a href="#">Crew</a></li>
-                                <li><a href="#">Passenger</a></li>
-                                <li><a href="#">Maintenance</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="fa fa-search"></i>
-                                <p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <p>new
-                                    <b class="caret"></b>
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Flight Updates</a></li>
-                                <li><a href="#">Booking Confirmations</a></li>
-                                <li><a href="#">Crew Assignments</a></li>
-                                <li><a href="#">Payment Status</a></li>
-                                <li><a href="#">Task Completion</a></li>
-                                <li><a href="#">Seat Availability</a></li>
-                                <li><a href="#">Passenger Feedback</a></li>
-                            </ul>
-                        </li>
-                        <li class="separator hidden-lg"></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">User Details</h4>
-                                <table id="passengerTable" border="1" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center;" width="100px">First Name</th>
-                                            <th style="text-align: center;" width="100px">Last Name</th>
-                                            <th style="text-align: center;" width="150px">Email</th>
-                                        </tr>
-				    </thead>
-                                        <tbody>
-						<!-- This is getting details from database-->
-                                            <tr th:each="u: ${user}" >
-                                                <td th:text="${u.firstName}"></td>
-                                                <td th:text="${u.lastName}"></td>
-                                                <td th:text="${u.email}"></td>
-                                            </tr>
-                                        </tbody>
-                        
-                                </table>
-                                <div class="footer">
+<body class="admin-body" data-admin-section="passengers">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <a class="admin-brand" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html">
+            <span class="admin-brand-badge"><i class="fa-solid fa-plane-departure"></i></span>
+            <span class="admin-brand-copy">
+                <h1>JKshian Admin</h1>
+                <p>Flight operations desk</p>
+            </span>
+        </a>
 
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 1 minutes ago
-                                    </div>
-                                </div>
-                           </div>
-                        </div>
+        <nav class="admin-nav">
+            <a class="admin-nav-link" data-nav="dashboard" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+            <a class="admin-nav-link" data-nav="passengers" th:href="@{/admin/passenger.html}" href="/admin/passenger.html"><i class="fa-solid fa-users"></i><span>Passengers</span></a>
+            <a class="admin-nav-link" data-nav="flights" th:href="@{/admin/flights.html}" href="/admin/flights.html"><i class="fa-solid fa-plane"></i><span>Flights</span></a>
+            <a class="admin-nav-link" data-nav="payments" th:href="@{/admin/paymentinfo.html}" href="/admin/paymentinfo.html"><i class="fa-solid fa-credit-card"></i><span>Payments</span></a>
+            <a class="admin-nav-link" data-nav="notifications" th:href="@{/admin/notifications.html}" href="/admin/notifications.html"><i class="fa-regular fa-bell"></i><span>Notifications</span></a>
+            <a class="admin-nav-link" data-nav="account" th:href="@{/admin/user.html}" href="/admin/user.html"><i class="fa-regular fa-id-badge"></i><span>Admin Account</span></a>
+            <button class="admin-logout" type="button" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></button>
+        </nav>
+
+        <div class="admin-sidebar-card">
+            <p>Passenger count</p>
+            <h3 th:text="${totalPassengers}">0</h3>
+        </div>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <p class="admin-kicker">Passenger records</p>
+                <h1>Registered Passengers</h1>
+                <p>These are the real user accounts currently stored with the passenger role.</p>
+            </div>
+
+            <div class="admin-user-panel">
+                <p>Signed in as admin</p>
+                <strong data-admin-email>admin@arms.com</strong>
+            </div>
+        </div>
+
+        <section class="admin-grid">
+            <article class="stat-card span-4">
+                <p>Total passengers</p>
+                <h2 th:text="${totalPassengers}">0</h2>
+                <small>Accounts available for booking flights.</small>
+            </article>
+            <article class="stat-card span-4">
+                <p>Total bookings</p>
+                <h2 th:text="${totalBookings}">0</h2>
+                <small>Reservations made by users so far.</small>
+            </article>
+            <article class="stat-card span-4">
+                <p>Revenue</p>
+                <h2 th:text="${totalRevenue}">INR 0.00</h2>
+                <small>Value generated from completed demo bookings.</small>
+            </article>
+
+            <section class="admin-card span-12">
+                <div class="admin-card-header">
+                    <div>
+                        <h2>Passenger directory</h2>
+                        <p>Review names and emails before contacting or supporting a passenger.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-<footer class="footer">
-    <div class="container-fluid">
-        <p class="copyright pull-right">
-            &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/ImeshaDilshani/Airline-Reservation-Management-System.git">JKshian</a>, Connecting People, Places, And Cultures.
-        </p>
-    </div>
-</footer>
+
+                <div th:if="${#lists.isEmpty(passengers)}" class="admin-empty">
+                    No passenger accounts have been created yet.
+                </div>
+
+                <div th:unless="${#lists.isEmpty(passengers)}" class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${passengers}">
+                            <td th:text="${user.id}">1</td>
+                            <td th:text="${user.firstName}">Demo</td>
+                            <td th:text="${user.lastName}">User</td>
+                            <td th:text="${user.email}">demo.user@arms.com</td>
+                            <td><span class="status-badge ok" th:text="${user.role}">ROLE_USER</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+    </main>
+</div>
+
+<script src="/js/admin-portal.js" th:src="@{/js/admin-portal.js}"></script>
 </body>
-        <!--   Core JS Files   -->
-        <script src="../../static/js/jquery.3.2.1.min.js" th:src="@{/js/jquery.3.2.1.min.js}" type="text/javascript"></script>
-        <script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
-        <!--  Charts Plugin -->
-        <script src="../../static/js/chartist.min.js" th:src="@{/js/chartist.min.js}"></script>
-        <!--  Notifications Plugin    -->
-        <script src="../../static/js/bootstrap-notify.js" th:src="@{/js/bootstrap-notify.js}"></script>
-        <!--  Google Maps Plugin    -->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-        <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-        <script src="../../static/js/light-bootstrap-dashboard.js?v=1.4.0" src="@{/js/light-bootstrap-dashboard.js?v=1.4.0}"></script>
-        <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-        <script src="../../static/js/demo.js" src="@{/js/demo.js}"></script>
 </html>

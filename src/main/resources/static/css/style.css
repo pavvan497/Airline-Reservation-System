@@ -199,7 +199,8 @@ html {
     color: #fff;
 }
 
-.inputBox input{
+.inputBox input,
+.inputBox select{
     width: 100%;
     padding: 1.2rem 1.4rem;
     border-radius: 5rem;
@@ -207,6 +208,12 @@ html {
     font-size: 1.6rem;
     color: black;
     text-transform: none;
+    background-color: #fff;
+}
+
+.inputBox select{
+    appearance: none;
+    cursor: pointer;
 }
 
 .covid{

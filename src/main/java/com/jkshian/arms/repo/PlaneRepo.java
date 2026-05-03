@@ -14,5 +14,10 @@ public interface PlaneRepo extends JpaRepository<AirPlane,Integer> {
     @Query("SELECT  a FROM AirPlane a WHERE a.start = ?1 AND a.end = ?2")
     AirPlane findByStartAndEnd(String start,String end);
 
+    @Query("SELECT a FROM AirPlane a WHERE lower(trim(a.start)) = lower(trim(?1)) AND lower(trim(a.end)) = lower(trim(?2))")
+    AirPlane findByStartAndEndIgnoreCase(String start, String end);
+
+    boolean existsByStartIgnoreCaseAndEndIgnoreCase(String start, String end);
+
     Optional<AirPlane> findById(int id);
 }

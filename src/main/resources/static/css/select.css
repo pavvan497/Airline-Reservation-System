@@ -1,70 +1,180 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .container {
-    max-width: 1000px;
-    max-height: 600px;
-    margin: 0 auto;
-    padding: 50px;
-    border: 2px solid color( rgb(252, 252, 252));
-    border-radius: 12px;
-    padding: 5px; ;
-   
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  .flight-option {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 2px solid rgb(255, 255, 255);
-    border-radius: 12px;
-    padding: 10px;
-  }
-  
-  .flight-option label {
-    cursor: pointer;
-  }
-  
-  .buttonsub {
-    background-color: #19A7CE; 
-  border: none;
-  border-radius: 12px;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  position: relative;
+}
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(8, 31, 44, 0.72), rgba(9, 98, 114, 0.42));
+}
+
+.container {
+  position: relative;
+  width: min(960px, 100%);
+  padding: 34px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(14px);
+}
+
+h1 {
+  margin: 0;
+  color: #17313a;
+  font-size: clamp(2rem, 3vw, 2.7rem);
+}
+
+.page-subtitle {
+  margin: 10px 0 26px;
+  color: #506771;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+#flight-chooser-form {
+  display: grid;
+  gap: 16px;
+}
+
+.selection-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.field-group {
+  display: grid;
+  gap: 8px;
+}
+
+.field-group label {
+  color: #17313a;
+  font-weight: 700;
+}
+
+.field-group select {
+  width: 100%;
+  border: 1px solid rgba(23, 49, 58, 0.16);
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  color: #17313a;
+  background: #f8fcfd;
+  outline: none;
+}
+
+.field-group select:focus {
+  border-color: rgba(13, 139, 122, 0.7);
+  box-shadow: 0 0 0 4px rgba(13, 139, 122, 0.12);
+}
+
+.flight-option {
+  border: 1px solid rgba(23, 49, 58, 0.12);
+  border-radius: 22px;
+  padding: 18px 20px;
+  background: rgba(247, 251, 252, 0.96);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flight-option:hover {
+  transform: translateY(-2px);
+  border-color: rgba(13, 139, 122, 0.45);
+  box-shadow: 0 16px 30px rgba(17, 60, 72, 0.08);
+}
+
+.flight-option label {
+  display: grid;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.flight-option input[type="radio"] {
+  accent-color: #0d8b7a;
+  width: 18px;
+  height: 18px;
+}
+
+.flight-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #17313a;
+}
+
+.flight-route {
+  font-size: 1rem;
+  color: #0d8b7a;
+  font-weight: 600;
+}
+
+.flight-time {
+  font-size: 0.94rem;
+  color: #617782;
+}
+
+.selected-flight-card {
+  display: grid;
+  gap: 8px;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.validation-message {
+  min-height: 24px;
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.buttonsub {
+  margin-top: 6px;
+  border: none;
+  border-radius: 18px;
+  color: white;
+  padding: 15px 18px;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0d8b7a, #12a2a5);
+  box-shadow: 0 18px 30px rgba(13, 139, 122, 0.25);
+}
+
+.buttonsub:hover {
+  background: linear-gradient(135deg, #09695d, #0d7c8e);
+}
+
+.empty-state {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(13, 139, 122, 0.08);
+  color: #0b5d5c;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 16px;
   }
-  
-  .flight-name {
-    font-size: 18px;
-    font-weight: bold;
+
+  .container {
+    padding: 24px 18px;
   }
-  
-  .flight-route {
-    font-size: 14px;
+
+  .selection-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .departure-time {
-    font-size: 14px;
-    font-style: italic;
-  }
-  
-  
-  
-  
-  button:hover {
-    background-color: #146C94;
-  }
-  
+}

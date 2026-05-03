@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flight Details and Ticket Selection</title>
-  <link rel="stylesheet" href="../../static/css/ticket.css">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="/css/ticket.css" th:href="@{/css/ticket.css}">
 </head>
-<body style="background-image: url('../../static/images/selectpage01.jpeg')">
+<body style="background-image: url('/images/selectpage01.jpeg')">
   <div class="container">
     <h1>Flight Details</h1>
+    <p class="page-subtitle">Review the selected route, choose the number of tickets, and we will calculate the live demo price before payment.</p>
     <div class="flight-details">
       <p><strong>Flight Name:</strong> <span id="displayFlightName"></span></p>
       <p><strong>Flight Route:</strong> <span id="displayFlightRoute"></span></p>
       <p><strong>Flight Time:</strong> <span id="displayFlightTime"></span></p>
+      <p><strong>Available Seats:</strong> <span id="displayFlightSeats"></span></p>
+      <p><strong>Distance:</strong> <span id="displayFlightKm"></span></p>
+    </div>
 
     <div class="ticket-selection">
       <h2>Ticket Selection</h2>
-      <form id="ticket-selection-form" action="payment.html" method="get">
+      <form id="ticket-selection-form">
         <label for="ticket-type">Ticket Type:</label>
         <select id="ticket-type" required>
           <option value="economy">Economy Class</option>
@@ -27,8 +30,9 @@
         <input type="number" id="ticket-count" min="1" value="1" required>
         <button type="submit">Proceed to Payment</button>
       </form>
+      <div id="ticket-message" style="margin-top: 1rem;"></div>
     </div>
   </div>
-  <script src="../../static/js/ticket.js"></script>
+  <script src="/js/ticket.js" th:src="@{/js/ticket.js}"></script>
   </body>
 </html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments</title>
+    <link rel="stylesheet" href="/css/admin-portal.css" th:href="@{/css/admin-portal.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body class="admin-body" data-admin-section="payments">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <a class="admin-brand" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html">
+            <span class="admin-brand-badge"><i class="fa-solid fa-plane-departure"></i></span>
+            <span class="admin-brand-copy">
+                <h1>JKshian Admin</h1>
+                <p>Flight operations desk</p>
+            </span>
+        </a>
+
+        <nav class="admin-nav">
+            <a class="admin-nav-link" data-nav="dashboard" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+            <a class="admin-nav-link" data-nav="passengers" th:href="@{/admin/passenger.html}" href="/admin/passenger.html"><i class="fa-solid fa-users"></i><span>Passengers</span></a>
+            <a class="admin-nav-link" data-nav="flights" th:href="@{/admin/flights.html}" href="/admin/flights.html"><i class="fa-solid fa-plane"></i><span>Flights</span></a>
+            <a class="admin-nav-link" data-nav="payments" th:href="@{/admin/paymentinfo.html}" href="/admin/paymentinfo.html"><i class="fa-solid fa-credit-card"></i><span>Payments</span></a>
+            <a class="admin-nav-link" data-nav="notifications" th:href="@{/admin/notifications.html}" href="/admin/notifications.html"><i class="fa-regular fa-bell"></i><span>Notifications</span></a>
+            <a class="admin-nav-link" data-nav="account" th:href="@{/admin/user.html}" href="/admin/user.html"><i class="fa-regular fa-id-badge"></i><span>Admin Account</span></a>
+            <button class="admin-logout" type="button" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></button>
+        </nav>
+
+        <div class="admin-sidebar-card">
+            <p>Collected revenue</p>
+            <h3 th:text="${totalRevenue}">INR 0.00</h3>
+        </div>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <p class="admin-kicker">Payment monitoring</p>
+                <h1>Payment Records</h1>
+                <p>This page now shows actual booking-based payment records instead of redirecting to notifications.</p>
+            </div>
+
+            <div class="admin-user-panel">
+                <p>Signed in as admin</p>
+                <strong data-admin-email>admin@arms.com</strong>
+            </div>
+        </div>
+
+        <section class="admin-grid">
+            <article class="stat-card span-4">
+                <p>Total payment records</p>
+                <h2 th:text="${totalBookings}">0</h2>
+                <small>Each successful booking creates one payment row here.</small>
+            </article>
+            <article class="stat-card span-4">
+                <p>Total revenue</p>
+                <h2 th:text="${totalRevenue}">INR 0.00</h2>
+                <small>Calculated from stored booking totals.</small>
+            </article>
+            <article class="stat-card span-4">
+                <p>Payment type</p>
+                <h2>Demo</h2>
+                <small>Bookings are confirmed with dummy card entry in this project.</small>
+            </article>
+
+            <section class="admin-card span-12">
+                <div class="admin-card-header">
+                    <div>
+                        <h2>Booking payment log</h2>
+                        <p>These rows come from the `booking` table and show the customer, route, price, and generated references.</p>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(bookings)}" class="admin-empty">
+                    No payment records exist yet. Complete a demo booking to populate this table.
+                </div>
+
+                <div th:unless="${#lists.isEmpty(bookings)}" class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                        <tr>
+                            <th>Booking ref</th>
+                            <th>Ticket number</th>
+                            <th>Passenger</th>
+                            <th>Route</th>
+                            <th>Tickets</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="booking : ${bookings}">
+                            <td th:text="${#strings.isEmpty(booking.bookingReference) ? 'BOOK-' + booking.id : booking.bookingReference}">BOOK-1</td>
+                            <td th:text="${#strings.isEmpty(booking.ticketNumber) ? 'Generated on next booking' : booking.ticketNumber}">TKT-00000001</td>
+                            <td th:text="${#strings.isEmpty(booking.userEmail) ? 'Unknown user' : booking.userEmail}">demo.user@arms.com</td>
+                            <td><span class="route-badge" th:text="${booking.bStart + ' -> ' + booking.bEnd}">Delhi -> Mumbai</span></td>
+                            <td th:text="${booking.bNumOfseat}">1</td>
+                            <td th:text="${'INR ' + #numbers.formatDecimal(booking.price, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                            <td><span class="status-badge ok">Demo paid</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+    </main>
+</div>
+
+<script src="/js/admin-portal.js" th:src="@{/js/admin-portal.js}"></script>
+</body>
+</html>

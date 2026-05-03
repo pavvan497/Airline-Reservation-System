@@ -14,13 +14,13 @@
 <body>
    <!-- header section starts  -->
    <header class="header">
-    <a href="http://localhost:8080/api/v1/auth/index" class="logo"><i class="fas fa-plane" aria-hidden="true"></i> JKshian</a>
+    <a th:href="@{/}" href="/" class="logo"><i class="fas fa-plane" aria-hidden="true"></i> JKshian</a>
     <nav class="navbar" id="MenuItems">
-             <li><a href="index.html">Home</a></li>
-             <li><a href="index.html">Booking</a></li>
-             <li><a href="contact.html">contact</a></li>
+             <li><a th:href="@{/}" href="/">Home</a></li>
+             <li><a th:href="@{/#book-form}" href="/#book-form">Booking</a></li>
+             <li><a th:href="@{/contact}" href="/contact">contact</a></li>
     </nav>
-    <a href="http://localhost:8080/api/v1/auth/login" class="login"><img src="../../static/images/avatar.svg" th:src="@{/images/avatar.svg}" width="30px" height="30px"></a>
+    <a th:href="@{/login}" href="/login" class="login"><img src="../../static/images/avatar.svg" th:src="@{/images/avatar.svg}" width="30px" height="30px"></a>
     <img src="../../static/images/menu.png" th:src="@{/images/menu.png}" class="menu-icon">
     </header>
    <!-----header section ends---->
@@ -116,81 +116,42 @@
    </div>
    <!-----Footer section ends------->
    <script type="text/javascript" >
-       function handleFormSubmit(event) {
+       async function handleFormSubmit(event) {
            event.preventDefault();
            const formData = {
                firstname: document.getElementById('firstname').value,
                lastname: document.getElementById('lastname').value,
                email: document.getElementById('email').value,
                password: document.getElementById('password').value,
-               // Add more form fields here as needed
            };
            const errorMessage = document.getElementById('error-message');
            const loadingIndicator = document.getElementById('loading-indicator');
-           errorMessage.textContent = ''; // Clear any previous error message
-           loadingIndicator.style.display = 'block'; // Show loading indicator
-           fetch('http://localhost:8080/api/v1/auth/register', {
-               method: 'POST',
-               headers: {
-                   'Content-Type': 'application/json',
-               },
-               body: JSON.stringify(formData),
-           })
-               .then(response => {
-                   if (!response.ok) {
-                       throw new Error('Network response was not ok');
-                   }
-                   return response.json();
-               })
-               .then(data => {
-                   const jwtToken = data.token;
+           errorMessage.textContent = '';
+           loadingIndicator.style.display = 'block';
 
-                   // Store the JWT token in localStorage
-                   localStorage.setItem('jwtToken', jwtToken);
-
-                   // Navigate to the new page once the user is authenticated
-                   redirectToProtectedPage();
-               })
-               .catch(error => {
-                   errorMessage.textContent = 'Registration failed. Please check your credentials.';
-                   console.error('Error:', error.message);
-               })
-               .finally(() => {
-                   loadingIndicator.style.display = 'none'; // Hide loading indicator
-               });
-       }
-       function redirectToProtectedPage() {
-           // Check if the JWT token is available in localStorage
-           const jwtToken = localStorage.getItem('jwtToken');
-           if (jwtToken) {
-               fetch('http://localhost:8080/api/v1/demo-controller/indexForRegistation', {
-                   method: 'GET',
+           try {
+               const response = await fetch('/api/v1/auth/register', {
+                   method: 'POST',
                    headers: {
-                       'Authorization': `Bearer ${jwtToken}`,
                        'Content-Type': 'application/json',
                    },
-               })
-                   .then(response => {
-                       if (response.ok) {
-                           // Redirect to the protected page
-                           // window.location.href = 'path/to/protected_page.html';
-                           return response.text();
-                       } else {
-                           // Handle other response statuses here, if needed
-                           console.error('Error:', response.status, response.statusText);
-                       }
-                   })
-                   .then(htmlContent => {
-                       // Render the HTML content in the current page
-                       document.body.innerHTML = htmlContent;
-                   })
-                   .catch(error => {
-                       console.error('Error:', error.message);
-                       // Handle errors here
-                   });
-           } else {
-               // If token is not available, redirect back to the login page
-               window.location.href = 'http://localhost:8080/api/v1/auth/registration';
+                   body: JSON.stringify(formData),
+               });
+
+               if (!response.ok) {
+                   throw new Error('Registration failed');
+               }
+
+               const data = await response.json();
+               localStorage.setItem('jwtToken', data.token);
+               localStorage.setItem('userRole', data.role || 'ROLE_USER');
+               localStorage.setItem('currentUserEmail', formData.email);
+               window.location.href = '/';
+           } catch (error) {
+               errorMessage.textContent = 'Registration failed. Please check your credentials.';
+               console.error('Error:', error.message);
+           } finally {
+               loadingIndicator.style.display = 'none';
            }
        }
 

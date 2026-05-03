@@ -1,60 +1,121 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(8, 31, 44, 0.74), rgba(9, 98, 114, 0.45));
+}
+
+.container {
+  position: relative;
+  width: min(920px, 100%);
+  padding: 34px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(14px);
+}
+
+h1,
+h2 {
+  color: #17313a;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.7rem);
+}
+
+.page-subtitle {
+  margin: 10px 0 26px;
+  color: #506771;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.flight-details,
+.ticket-selection {
+  border: 1px solid rgba(23, 49, 58, 0.12);
+  border-radius: 22px;
+  padding: 22px;
+  background: rgba(248, 251, 252, 0.96);
+}
+
+.flight-details {
+  margin-bottom: 18px;
+}
+
+.flight-details p,
+.ticket-selection label {
+  color: #244552;
+}
+
+.ticket-selection form {
+  display: grid;
+  gap: 14px;
+}
+
+.ticket-selection label {
+  font-weight: 700;
+}
+
+.ticket-selection input,
+.ticket-selection select {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(23, 49, 58, 0.16);
+  padding: 13px 14px;
+  font-size: 0.96rem;
+  background: #ffffff;
+}
+
+.ticket-selection input:focus,
+.ticket-selection select:focus {
+  outline: 2px solid rgba(13, 139, 122, 0.18);
+  border-color: rgba(13, 139, 122, 0.45);
+}
+
+.ticket-selection button {
+  margin-top: 6px;
+  border: none;
+  border-radius: 18px;
+  color: white;
+  padding: 15px 18px;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0d8b7a, #12a2a5);
+  box-shadow: 0 18px 30px rgba(13, 139, 122, 0.25);
+}
+
+.ticket-selection button:hover {
+  background: linear-gradient(135deg, #09695d, #0d7c8e);
+}
+
+#ticket-message {
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 16px;
   }
-  
+
   .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
+    padding: 24px 18px;
   }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  .flight-option {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .buttonsub {
-    background-color: #19A7CE; 
-    border: none;
-    border-radius: 12px;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;}
-    
-  .flight-option label {
-    cursor: pointer;
-  }
-  
-  .flight-name {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .flight-route {
-    font-size: 14px;
-  }
-  
-  .departure-time {
-    font-size: 14px;
-    font-style: italic;
-  }
-  
-  
-  
-  button:hover {
-    background-color: #146C94;
-  }
-  
+}

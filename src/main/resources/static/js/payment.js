@@ -1,44 +1,73 @@
-// Sample data for demonstration
-const bookingData = {
-    airplaneType: "Boeing 737",
-    departureTime: "2023-08-15 14:00",
-    startPlace: "New York",
-    destination: "Los Angeles",
-    ticketCount: 3,
-    ticketNumbers: ["A1234", "A1235", "A1236"],
-    ticketPrice: 150.00,
-  };
+const bookingData = JSON.parse(sessionStorage.getItem("bookingData") || "null");
+const paymentMessage = document.getElementById("payment-message");
 
-  // Function to update the displayed booking details
-  function updateBookingDetails() {
-    document.getElementById("airplane-type").textContent = bookingData.airplaneType;
-    document.getElementById("departure-time").textContent = bookingData.departureTime;
-    document.getElementById("start-place").textContent = bookingData.startPlace;
-    document.getElementById("destination").textContent = bookingData.destination;
-    document.getElementById("ticket-count").textContent = bookingData.ticketCount;
-    document.getElementById("ticket-numbers").textContent = bookingData.ticketNumbers.join(", ");
-    document.getElementById("ticket-price").textContent = `$${bookingData.ticketPrice.toFixed(2)}`;
+function formatPrice(price) {
+  return `INR ${Number(price).toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
+}
+
+function updateBookingDetails() {
+  if (!bookingData) {
+    paymentMessage.textContent = "No booking details were found. Please start again from the home page.";
+    paymentMessage.style.color = "#c0392b";
+    document.querySelector("#payment-form button[type='submit']").disabled = true;
+    return;
   }
 
-  // Event listener for form submission
-  document.getElementById("payment-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-    const cardHolder = document.getElementById("card-holder").value;
-    const cardNumber = document.getElementById("card-number").value;
-    const expiryDate = document.getElementById("expiry-date").value;
-    const cvv = document.getElementById("cvv").value;
+  document.getElementById("airplane-type").textContent = bookingData.flightName || "Available flight";
+  document.getElementById("departure-time").textContent = bookingData.flightTime || "Assigned at confirmation";
+  document.getElementById("start-place").textContent = bookingData.bstart;
+  document.getElementById("destination").textContent = bookingData.bend;
+  document.getElementById("ticket-count").textContent = bookingData.bnumofseat;
+  document.getElementById("ticket-price").textContent = formatPrice(bookingData.price);
+}
 
-    // Here, you can add the code to process the payment information, e.g., sending to a backend for processing.
+document.getElementById("payment-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
 
-    // For this example, we'll just show an alert indicating payment success.
-    alert("Payment Successful!");
+  const jwtToken = localStorage.getItem("jwtToken");
+  if (!jwtToken) {
+    window.location.href = "/login";
+    return;
+  }
 
-    // Clear the form fields after successful payment
-    document.getElementById("card-holder").value = "";
-    document.getElementById("card-number").value = "";
-    document.getElementById("expiry-date").value = "";
-    document.getElementById("cvv").value = "";
-  });
+  if (!bookingData) {
+    paymentMessage.textContent = "Booking details are missing. Please try again.";
+    paymentMessage.style.color = "#c0392b";
+    return;
+  }
 
-  // Update the booking details on page load
-  updateBookingDetails();
+  try {
+    const response = await fetch("/api/v1/demo-controller/checkPrice/addBooking", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${jwtToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData),
+    });
+
+    const responseText = await response.text();
+    let responseBody = {};
+    try {
+      responseBody = responseText ? JSON.parse(responseText) : {};
+    } catch (parseError) {
+      responseBody = { message: responseText || "Booking failed" };
+    }
+    if (!response.ok) {
+      throw new Error(responseBody.message || "Booking failed");
+    }
+
+    sessionStorage.setItem("bookingConfirmation", JSON.stringify(responseBody));
+    sessionStorage.removeItem("bookingData");
+    sessionStorage.removeItem("selectedFlight");
+    window.location.href = "/confirmation";
+  } catch (error) {
+    paymentMessage.textContent = error.message;
+    paymentMessage.style.color = "#c0392b";
+  }
+});
+
+updateBookingDetails();

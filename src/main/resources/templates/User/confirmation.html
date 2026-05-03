@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmation</title>
+  <link rel="stylesheet" href="/css/payment.css" th:href="@{/css/payment.css}">
+</head>
+<body style="background-image: url('/images/bg.png')">
+  <div class="container">
+    <h1>Booking Confirmed</h1>
+    <div class="success-message" id="confirmation-message">
+      Your demo booking has been recorded successfully.
+    </div>
+
+    <div class="booking-details">
+      <h2>Confirmation Details</h2>
+      <p><strong>Booking Reference:</strong> <span id="booking-reference"></span></p>
+      <p><strong>Ticket Number:</strong> <span id="ticket-number"></span></p>
+      <p><strong>Start Place:</strong> <span id="start-place"></span></p>
+      <p><strong>Destination:</strong> <span id="destination"></span></p>
+      <p><strong>No. of Tickets:</strong> <span id="ticket-count"></span></p>
+      <p><strong>Total Price:</strong> <span id="ticket-price"></span></p>
+      <p><strong>Booked By:</strong> <span id="user-email"></span></p>
+    </div>
+
+    <div class="confirmation-actions">
+      <a class="action-link" th:href="@{/}" href="/">Book Another Flight</a>
+      <a class="action-link" th:href="@{/select}" href="/select">View Available Flights</a>
+    </div>
+  </div>
+
+  <script>
+    const confirmation = JSON.parse(sessionStorage.getItem("bookingConfirmation") || "null");
+
+    function formatPrice(price) {
+      return `INR ${Number(price).toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`;
+    }
+
+    if (!confirmation) {
+      document.getElementById("confirmation-message").textContent = "No booking confirmation was found. Please complete a booking first.";
+      document.getElementById("confirmation-message").style.background = "rgba(255, 235, 238, 0.9)";
+      document.getElementById("confirmation-message").style.borderColor = "#e09ba7";
+      document.getElementById("confirmation-message").style.color = "#8a1f2f";
+    } else {
+      document.getElementById("confirmation-message").textContent = confirmation.message;
+      document.getElementById("booking-reference").textContent = confirmation.bookingReference;
+      document.getElementById("ticket-number").textContent = confirmation.ticketNumber;
+      document.getElementById("start-place").textContent = confirmation.startPlace;
+      document.getElementById("destination").textContent = confirmation.destination;
+      document.getElementById("ticket-count").textContent = confirmation.ticketCount;
+      document.getElementById("ticket-price").textContent = formatPrice(confirmation.totalPrice);
+      document.getElementById("user-email").textContent = confirmation.userEmail || "Signed-in user";
+    }
+  </script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import com.jkshian.arms.dto.AuthenticationResponse;
 import com.jkshian.arms.dto.RegisterRequest;
 import com.jkshian.arms.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,11 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody RegisterRequest request){
-        return  ResponseEntity.ok(service.registerUser(request));
+        AuthenticationResponse response = service.registerUser(request);
+        if (response == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(response);
     }
 
 
@@ -37,10 +42,10 @@ public class AuthenticationController {
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
     AuthenticationResponse response = service.authenticate(request);
-          if(response !=null) {
-              return ResponseEntity.ok(response);
-          }
-        return null;
+      if(response !=null) {
+          return ResponseEntity.ok(response);
+      }
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 }
 
 

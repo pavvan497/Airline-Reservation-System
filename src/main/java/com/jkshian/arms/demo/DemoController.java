@@ -160,7 +160,7 @@ public class DemoController {
 
 
     // User only can access this method
-    @GetMapping("/checkPrice")
+    @PostMapping("/checkPrice")
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     public ResponseEntity<Double> checkPrice(@RequestBody BookingDto bookingDto) {
         return bookingService.checkPrice(bookingDto);
@@ -169,7 +169,7 @@ public class DemoController {
     // User only can access this method
     @PostMapping("/checkPrice/addBooking")
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
-    public ResponseEntity<String> addBooking(@RequestBody BookingDto bookingdto) {
+    public ResponseEntity<BookingConfirmationResponse> addBooking(@RequestBody BookingDto bookingdto) {
         return bookingService.addBooking(bookingdto);
     }
 

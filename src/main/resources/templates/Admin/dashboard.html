@@ -1,404 +1,172 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.w3.org/1999/xhtml" >
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-
     <meta charset="UTF-8">
-
-	<title>JKshian</title>
-
-    <!-- Bootstrap core CSS     -->
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"  href="../../static/css/bootstrap.min.css">
-
-    <!-- Animation library for notifications   -->
-    <link rel="stylesheet" th:href="@{/css/animate.min.css}"  href="../../static/css/animate.min.css" >
-
-    <!--  Light Bootstrap Table core CSS    -->
-    <link rel="stylesheet" th:href="@{/css/light-bootstrap-dashboard.css?v=1.4.0}" href="../../static/css/light-bootstrap-dashboard.css?v=1.4.0" >
-
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link rel="stylesheet" th:href="@{/css/demo.css}"  href="../../static/css/demo.css" >
-
-    <!--     Fonts and icons     -->
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" th:href="@{/css/pe-icon-7-stroke.css}"  href="../../static/css/pe-icon-7-stroke.css"  >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/admin-portal.css" th:href="@{/css/admin-portal.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
-<body>
-<div class="wrapper">
-    <div class="sidebar" data-color="green" data-image="../static/images/sb2.jpeg" th:data-image="@{/images/sb2.jpeg}" >
-    	<div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="https://github.com/ImeshaDilshani/Airline-Reservation-Management-System.git" class="simple-text">
-                    <i class="fas fa-plane" aria-hidden="true"></i>
-                    JKshian
-                </a>
-            </div>
+<body class="admin-body" data-admin-section="dashboard">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <a class="admin-brand" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html">
+            <span class="admin-brand-badge"><i class="fa-solid fa-plane-departure"></i></span>
+            <span class="admin-brand-copy">
+                <h1>JKshian Admin</h1>
+                <p>Flight operations desk</p>
+            </span>
+        </a>
 
-            <ul class="nav">
-                <li class="active">
-                    <a href="dashboard.html">
-                        <i class="fa-solid fa-chart-simple"></i>
-                        <p>dashboard</p>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="passenger.html">
-                        <i class="fa-solid fa-user"></i>
-                        <p>Passengers</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="flights.html">
-                        <i class="fa-solid fa-plane"></i>
-                        <p>Flights</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="paymentinfo.html">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <p>Payments</p>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="notifications.html">
-                        <i class="fa-regular fa-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-
-				<li class="active-pro">
-                    <a href="user.html">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <p>Log Out</p>
-                    </a>
-                </li>
-            </ul>
-    	</div>
-    </div>
-
-    <div class="main-panel">
-        <nav class="navbar navbar-default navbar-fixed">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-lg hidden-md"></b>
-									<p class="hidden-lg hidden-md">
-										5 Notifications
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Flight</a></li>
-                                <li><a href="#">Booking</a></li>
-                                <li><a href="#">Crew</a></li>
-                                <li><a href="#">Passenger</a></li>
-                                <li><a href="#">Maintenance</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-								<p class="hidden-lg hidden-md">Search</p>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                           <a href="user.html">
-                               <p>MAndew23</p>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <p>
-										new
-										<b class="caret"></b>
-									</p>
-
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Flight Updates</a></li>
-                                <li><a href="#">Booking Confirmations</a></li>
-                                <li><a href="#">Crew Assignments</a></li>
-                                <li><a href="#">Payment Status</a></li>
-                                <li><a href="#">Task Completion</a></li>
-                                <li><a href="#">Seat Availability</a></li>
-                                <li><a href="#">Passenger Feedback</a></li>
-                              </ul>
-                        </li>
-
-						<li class="separator hidden-lg"></li>
-                    </ul>
-                </div>
-            </div>
+        <nav class="admin-nav">
+            <a class="admin-nav-link" data-nav="dashboard" th:href="@{/admin/dashboard.html}" href="/admin/dashboard.html"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a>
+            <a class="admin-nav-link" data-nav="passengers" th:href="@{/admin/passenger.html}" href="/admin/passenger.html"><i class="fa-solid fa-users"></i><span>Passengers</span></a>
+            <a class="admin-nav-link" data-nav="flights" th:href="@{/admin/flights.html}" href="/admin/flights.html"><i class="fa-solid fa-plane"></i><span>Flights</span></a>
+            <a class="admin-nav-link" data-nav="payments" th:href="@{/admin/paymentinfo.html}" href="/admin/paymentinfo.html"><i class="fa-solid fa-credit-card"></i><span>Payments</span></a>
+            <a class="admin-nav-link" data-nav="notifications" th:href="@{/admin/notifications.html}" href="/admin/notifications.html"><i class="fa-regular fa-bell"></i><span>Notifications</span></a>
+            <a class="admin-nav-link" data-nav="account" th:href="@{/admin/user.html}" href="/admin/user.html"><i class="fa-regular fa-id-badge"></i><span>Admin Account</span></a>
+            <button class="admin-logout" type="button" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></button>
         </nav>
 
+        <div class="admin-sidebar-card">
+            <p>Revenue tracked</p>
+            <h3 th:text="${totalRevenue}">INR 0.00</h3>
+        </div>
+    </aside>
 
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <p class="admin-kicker">Live overview</p>
+                <h1>Operations Dashboard</h1>
+                <p>All cards below are coming from your current flights, users, and booking records.</p>
+            </div>
 
-                            <div class="header">
-                                <h4 class="title">All Booking</h4>
-                                <p class="category">Update now</p>
-                            </div>
-                            <div class="content">
-                                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
-
-                                <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Group
-                                        <i class="fa fa-circle text-danger"></i> Family
-                                        <i class="fa fa-circle text-warning"></i> Individual
-                                    </div>
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-clock-o"></i> Time Period
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Passenger Behavior</h4>
-                                <p class="category">24 Hours performance</p>
-                            </div>
-                            <div class="content">
-                                <div id="chartHours" class="ct-chart"></div>
-                                <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Group
-                                        <i class="fa fa-circle text-danger"></i> Family
-                                        <i class="fa fa-circle text-warning"></i> Individual
-                                    </div>
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card ">
-                            <div class="header">
-                                <h4 class="title">Data Collection</h4>
-                                <p class="category">All information up to date</p>
-                            </div>
-                            <div class="content">
-                                <div id="chartActivity" class="ct-chart"></div>
-
-                                <div class="footer">
-                                    <div class="legend">
-
-                                    </div>
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-check"></i> Data information certified
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="card ">
-                            <div class="header">
-                                <h4 class="title">Tasks</h4>
-                                <p class="category">Assigning tasks to the airline administrator </p>
-                            </div>
-                            <div class="content">
-                                <div class="table-full-width">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox1" type="checkbox">
-						  							  	<label for="checkbox1"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Passenger Feedback Analysis -  Analyze the latest passenger feedback</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox2" type="checkbox" checked>
-						  							  	<label for="checkbox2"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Flight Crew Training Schedule - Create the training schedule for flight crew members for the upcoming quarter. </td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox3" type="checkbox">
-						  							  	<label for="checkbox3"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Emergency Response Plan Review -  Review the airline's emergency response plan and ensure it is up-to-date
-												</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox4" type="checkbox" checked>
-						  							  	<label for="checkbox4"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>On-time Performance Review - Evaluate the on-time performance of flights over the past month </td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox5" type="checkbox">
-						  							  	<label for="checkbox5"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Emergency Response Plan Review</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-													<div class="checkbox">
-						  							  	<input id="checkbox6" type="checkbox" checked>
-						  							  	<label for="checkbox6"></label>
-					  						  		</div>
-                                                </td>
-                                                <td>Aircraft Maintenance Scheduling</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="footer">
-                                    <hr>
-                                    <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="admin-user-panel">
+                <p>Signed in as admin</p>
+                <strong data-admin-email>admin@arms.com</strong>
             </div>
         </div>
 
+        <section class="admin-grid">
+            <article class="stat-card span-3">
+                <p>Total bookings</p>
+                <h2 th:text="${totalBookings}">0</h2>
+                <small>Successful reservations stored in the booking table.</small>
+            </article>
+            <article class="stat-card span-3">
+                <p>Total passengers</p>
+                <h2 th:text="${totalPassengers}">0</h2>
+                <small>Registered users with the passenger role.</small>
+            </article>
+            <article class="stat-card span-3">
+                <p>Active routes</p>
+                <h2 th:text="${totalFlights}">0</h2>
+                <small>Routes available for search and booking.</small>
+            </article>
+            <article class="stat-card span-3">
+                <p>Low-seat alerts</p>
+                <h2 th:text="${lowSeatCount}">0</h2>
+                <small>Flights at 15 seats or fewer right now.</small>
+            </article>
 
-        <footer class="footer">
-            <div class="container-fluid">
-                <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://github.com/ImeshaDilshani/Airline-Reservation-Management-System.git">JKshian</a>, Connecting People, Places, And Cultures.
-                </p>
-            </div>
-        </footer>
+            <section class="admin-card span-8">
+                <div class="admin-card-header">
+                    <div>
+                        <h2>Recent bookings</h2>
+                        <p>Newest recorded bookings with real route and price data.</p>
+                    </div>
+                    <span class="admin-pill"><i class="fa-solid fa-receipt"></i> Live bookings</span>
+                </div>
 
-    </div>
+                <div th:if="${#lists.isEmpty(recentBookings)}" class="admin-empty">
+                    No bookings have been made yet. Once a passenger completes demo payment, the booking will appear here.
+                </div>
+
+                <div th:unless="${#lists.isEmpty(recentBookings)}" class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                        <tr>
+                            <th>Booking Ref</th>
+                            <th>Passenger</th>
+                            <th>Route</th>
+                            <th>Tickets</th>
+                            <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="booking : ${recentBookings}">
+                            <td th:text="${#strings.isEmpty(booking.bookingReference) ? 'BOOK-' + booking.id : booking.bookingReference}">BOOK-1</td>
+                            <td th:text="${#strings.isEmpty(booking.userEmail) ? 'Unknown user' : booking.userEmail}">demo.user@arms.com</td>
+                            <td>
+                                <span class="route-badge" th:text="${booking.bStart + ' -> ' + booking.bEnd}">Delhi -> Mumbai</span>
+                            </td>
+                            <td th:text="${booking.bNumOfseat}">1</td>
+                            <td th:text="${'INR ' + #numbers.formatDecimal(booking.price, 1, 'COMMA', 2, 'POINT')}">INR 0.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="admin-card span-4">
+                <div class="admin-card-header">
+                    <div>
+                        <h3>Popular routes</h3>
+                        <p>Most booked paths from recorded reservations.</p>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(routeSummary)}" class="admin-empty">
+                    Route usage will appear here after bookings start coming in.
+                </div>
+
+                <ul th:unless="${#lists.isEmpty(routeSummary)}" class="admin-list">
+                    <li th:each="route : ${routeSummary}">
+                        <strong th:text="${route.route}">Delhi -> Mumbai</strong>
+                        <span th:text="${route.bookingCount + ' booking(s)'}">2 booking(s)</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="admin-card span-5">
+                <div class="admin-card-header">
+                    <div>
+                        <h3>Low-seat flights</h3>
+                        <p>Routes that may need replenishment or monitoring.</p>
+                    </div>
+                </div>
+
+                <div th:if="${#lists.isEmpty(lowSeatFlights)}" class="admin-empty">
+                    No flights are under the low-seat threshold right now.
+                </div>
+
+                <ul th:unless="${#lists.isEmpty(lowSeatFlights)}" class="admin-list">
+                    <li th:each="flight : ${lowSeatFlights}">
+                        <strong th:text="${flight.start + ' -> ' + flight.end}">Chennai -> Goa</strong>
+                        <span th:text="${flight.avlSeat + ' seats remaining | ' + flight.numOfKm + ' km'}">11 seats remaining</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="admin-card span-7">
+                <div class="admin-card-header">
+                    <div>
+                        <h3>Quick actions</h3>
+                        <p>Jump straight into the most common admin workflows.</p>
+                    </div>
+                </div>
+
+                <div class="admin-actions">
+                    <a class="admin-button" th:href="@{/admin/newflight.html}" href="/admin/newflight.html"><i class="fa-solid fa-plus"></i> Add new flight</a>
+                    <a class="admin-button-secondary" th:href="@{/admin/paymentinfo.html}" href="/admin/paymentinfo.html"><i class="fa-solid fa-wallet"></i> Review payments</a>
+                    <a class="admin-button-secondary" th:href="@{/admin/passenger.html}" href="/admin/passenger.html"><i class="fa-solid fa-user-group"></i> View passengers</a>
+                </div>
+            </section>
+        </section>
+    </main>
 </div>
 
-
+<script src="/js/admin-portal.js" th:src="@{/js/admin-portal.js}"></script>
 </body>
-
-
-<!--    &lt;!&ndash;   Core JS Files   &ndash;&gt;-->
-<!--    <script src="../../static/js/jquery.3.2.1.min.js" th:src="@{/js/jquery.3.2.1.min.js}" type="text/javascript"></script>-->
-<!--	<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>-->
-
-<!--	&lt;!&ndash;  Charts Plugin &ndash;&gt;-->
-<!--	<script src="../../static/js/chartist.min.js" th:src="@{/js/chartist.min.js}"></script>-->
-
-<!--    &lt;!&ndash;  Notifications Plugin    &ndash;&gt;-->
-<!--    <script src="../../static/js/bootstrap-notify.js" th:src="@{/js/bootstrap-notify.js}"></script>-->
-
-<!--    &lt;!&ndash;  Google Maps Plugin    &ndash;&gt;-->
-<!--    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>-->
-
-<!--    &lt;!&ndash; Light Bootstrap Table Core javascript and methods for Demo purpose &ndash;&gt;-->
-<!--	<script src="../../static/js/light-bootstrap-dashboard.js?v=1.4.0" src="@{/js/light-bootstrap-dashboard.js?v=1.4.0}"></script>-->
-
-<!--	&lt;!&ndash; Light Bootstrap Table DEMO methods, don't include it in your project! &ndash;&gt;-->
-<!--	<script src="../../static/js/demo.js" src="@{/js/demo.js}"></script>-->
-
-<!--	<script type="text/javascript">-->
-<!--    	$(document).ready(function(){-->
-
-<!--        	demo.initChartist();-->
-
-<!--    	});-->
-<!--	</script>-->
-
 </html>

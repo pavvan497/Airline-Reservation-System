@@ -1,39 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flight Choosing Page</title>
-  <link rel="stylesheet" href="../../static/css/select.css">
+  <link rel="stylesheet" href="/css/select.css" th:href="@{/css/select.css}">
   
 </head>
-<body style="background-image: url('../../static/images/selectpage01.jpeg')">
+<body style="background-image: url('/images/selectpage01.jpeg')">
   <div class="container">
-    <h1 >Choose Your Flight</h1>
-    <form id="flight-chooser-form" action="ticket.html" method="get">
-      <div class="flight-option" >
-       
-      <label>
-          <input type="radio" name="flight" value="flight1">
-          <span class="flight-name">Flight A</span>
-          <span class="flight-route">Route A</span>
-          <span class="flight-time">10:00 AM</span>
-      </label>
+    <h1>Choose Your Flight</h1>
+    <p class="page-subtitle">All registered flights are loaded here. Pick a flight directly or select a source and destination to continue.</p>
+    <form id="flight-chooser-form" th:action="@{/ticket}" action="/ticket" method="get">
+      <div th:if="${#lists.isEmpty(planes)}" class="empty-state">
+        No flights are available yet. Add routes from the admin dashboard and refresh this page.
       </div>
-      <div class="flight-option">
-        
-        <label>
-          <input type="radio" name="flight" value="flight2">
-          <span class="flight-name">Flight B</span>
-          <span class="flight-route">Route B</span>
-          <span class="flight-time">11:00 AM</span>
-      </label>
+
+      <div th:unless="${#lists.isEmpty(planes)}" class="selection-grid">
+        <div class="field-group">
+          <label for="flight-select">Registered Flights</label>
+          <select id="flight-select" name="flight" required>
+            <option value="">Select a flight</option>
+            <option
+              th:each="plane : ${planes}"
+              th:value="${plane.id}"
+              th:text="${'Flight ' + plane.id + ' - ' + plane.start + ' to ' + plane.end}"
+              th:attr="data-start=${plane.start},data-end=${plane.end},data-seats=${plane.avlSeat},data-km=${plane.numOfKm}">
+              Flight option
+            </option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="source-select">Source</label>
+          <select id="source-select" required>
+            <option value="">Select source</option>
+            <option th:each="airport : ${airports}" th:value="${airport}" th:text="${airport}">Airport</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="destination-select">Destination</label>
+          <select id="destination-select" required>
+            <option value="">Select destination</option>
+            <option th:each="airport : ${airports}" th:value="${airport}" th:text="${airport}">Airport</option>
+          </select>
+        </div>
       </div>
-      <!-- Add more flight options here -->
+
+      <div id="route-validation-message" class="validation-message" aria-live="polite"></div>
+
+      <div id="selected-flight-card" class="flight-option selected-flight-card is-hidden">
+        <span id="selected-flight-name" class="flight-name">Flight</span>
+        <span id="selected-flight-route" class="flight-route">Route</span>
+        <span id="selected-flight-time" class="flight-time">Details</span>
+      </div>
      
-      <button class = "buttonsub" type="submit" >Select Flight </button>
+      <button class="buttonsub" type="submit">Continue to Tickets</button>
     </form>
   </div>
-  <script src="../../static/js/select.js"></script>
+  <script src="/js/select.js" th:src="@{/js/select.js}"></script>
 </body>
 </html>

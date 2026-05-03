@@ -23,5 +23,8 @@ public class Booking {
     private String userEmail;
     private int bNumOfseat;
     private double price;
+    @Column(unique = true)
+    private String bookingReference;
+    private String ticketNumber;
 
 }

@@ -17,11 +17,11 @@
    <header class="header">
    <a href="#" class="logo"><i class="fas fa-plane" aria-hidden="true"></i> JKshian</a>
    <nav class="navbar">
-       <a href="index.html">Home</a>
-       <a href="index.html">Booking</a>
-       <a href="contact.html">contact</a>
+       <a th:href="@{/}" href="/">Home</a>
+       <a th:href="@{/#book-form}" href="/#book-form">Booking</a>
+       <a th:href="@{/contact}" href="/contact">contact</a>
    </nav>
-   <a href="http://localhost:8080/api/v1/auth/login" >
+   <a th:href="@{/login}" href="/login">
        <img src="../../static/images/avatar.svg" th:src="@{/images/avatar.svg}" width="30px" height="30px"></a>
    </header>
 <section class="log">
@@ -52,7 +52,7 @@
                </div>
                <a href="#">Forgot Password?</a>
                <input type="submit" class="btn" value="Login">
-                <a href="http://localhost:8080/api/v1/auth/registration" class="sign">Sign Up</a>
+                <a th:href="@{/registration}" href="/registration" class="sign">Sign Up</a>
                <div id="error-message"></div>
                <div id="loading-indicator" style="display: none;">Logging in...</div>
            </form>
@@ -101,90 +101,52 @@
 
 <!-----Custom js file link----->
 <script type="text/javascript" >
-
-
-    function handleFormSubmit(event) {
+    async function handleFormSubmit(event) {
         event.preventDefault();
 
         const formData = {
             email: document.getElementById('username').value,
             password: document.getElementById('password').value,
-            // Add more form fields here as needed
         };
 
         const errorMessage = document.getElementById('error-message');
         const loadingIndicator = document.getElementById('loading-indicator');
 
-        errorMessage.textContent = ''; // Clear any previous error message
-        loadingIndicator.style.display = 'block'; // Show loading indicator
+        errorMessage.textContent = '';
+        loadingIndicator.style.display = 'block';
 
-        fetch('http://localhost:8080/api/v1/auth/authenticate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                return response.json();
-            })
-            .then(data => {
-                const jwtToken = data.token;
-
-                // Store the JWT token in localStorage
-                localStorage.setItem('jwtToken', jwtToken);
-                redirectToProtectedPage(formData);
-            })
-            .catch(error => {
-                errorMessage.textContent = 'Login failed. Please check your credentials.';
-                console.error('Error:', error.message);
-            })
-            .finally(() => {
-                loadingIndicator.style.display = 'none'; // Hide loading indicator
-            });
-    }
-    function redirectToProtectedPage(formData) {
-        // Check if the JWT token is available in localStorage
-        const jwtToken = localStorage.getItem('jwtToken');
-        if (jwtToken) {
-            fetch('http://localhost:8080/api/v1/demo-controller/index', {
+        try {
+            const response = await fetch('/api/v1/auth/authenticate', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${jwtToken}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
-            })
-                .then(response => {
-                    if (response.ok) {
-                        // Redirect to the protected page
+            });
 
-                        return response.text();
-                    } else {
-                        // Handle other response statuses here, if needed
-                        console.error('Error:', response.status, response.statusText);
-                    }
-                })
-                .then(htmlContent => {
-                    window.history.pushState({}, '', '/api/v1/demo-controller');
-                    // Render the HTML content in the current page
-                    document.body.innerHTML = htmlContent;
-                })
-                .catch(error => {
-                    console.error('Error:', error.message);
-                    // Handle errors here
-                });
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
 
-        } else {
-            // If token is not available, redirect back to the login page
-            localStorage.setItem('');
-            window.location.href = 'http://localhost:8080/api/v1/auth/login';
+            const data = await response.json();
+            localStorage.setItem('jwtToken', data.token);
+            localStorage.setItem('userRole', data.role || 'ROLE_USER');
+            localStorage.setItem('currentUserEmail', formData.email);
+
+            if (data.role === 'ROLE_ADMIN') {
+                window.location.href = '/admin/dashboard';
+                return;
+            }
+
+            window.location.href = '/';
+        } catch (error) {
+            errorMessage.textContent = 'Login failed. Please check your credentials.';
+            console.error('Error:', error.message);
+        } finally {
+            loadingIndicator.style.display = 'none';
         }
     }
+
     const loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', handleFormSubmit);
 </script>

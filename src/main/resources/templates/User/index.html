@@ -15,11 +15,11 @@
 <header class="header">
   <a href="#" class="logo"><i class="fas fa-plane" aria-hidden="true"></i> JKshian</a>
   <nav class="navbar">
-    <a href="index.html">Home</a>
-    <a href="#book-form">Booking</a>
-    <a href="contact.html">contact</a>
+    <a th:href="@{/}" href="/">Home</a>
+    <a th:href="@{/#book-form}" href="/#book-form">Booking</a>
+    <a th:href="@{/contact}" href="/contact">contact</a>
   </nav>
-  <a href="http://localhost:8080/api/v1/auth/login" ><img src="../../static/images/avatar.svg" th:src="@{/images/avatar.svg}" width="30px" height="30px"/></a>
+  <a th:href="@{/login}" href="/login"><img src="../../static/images/avatar.svg" th:src="@{/images/avatar.svg}" width="30px" height="30px"/></a>
 </header>
 <!-----header section ends---->
 
@@ -56,11 +56,16 @@
   <form id="bookingForm">
     <div class="inputBox">
                     <span><i class="fa-solid fa-plane-departure"></i> From</span>
-                    <input type="text" placeholder="Place name" value="" id="bstart">
+                    <select id="bstart">
+                      <option value="">Select departure</option>
+                      <option th:each="airport : ${startAirports}" th:value="${airport}" th:text="${airport}">Airport</option>
+                    </select>
     </div>
     <div class="inputBox">
                     <span><i class="fa-sharp fa-solid fa-plane-arrival"></i> To</span>
-                    <input type="text" placeholder="Place name" value="" id="bEnd">
+                    <select id="bEnd">
+                      <option value="">Select destination</option>
+                    </select>
     </div>
 <!--    <div class="inputBox">-->
 <!--                    <span><i class="fa-solid fa-calendar-days"></i> Departure</span>-->
@@ -75,9 +80,10 @@
       <input type="number" placeholder=" passengers" value="" id="numOfSeat">
     </div>
 
-
    <button type="button" id="btnclick" class="btn-2" >Check Price</button>
-    <a href="payment.html" class="btn-2" style="visibility: hidden" id="bookNowbtn">Book Now</a>
+    <a th:href="@{/payment}" href="/payment" class="btn-2" style="visibility: hidden" id="bookNowbtn">Book Now</a>
+    <div id="error-message" style="margin-top: 1rem; color: #c0392b;"></div>
+    <div id="loading-indicator" style="display: none; margin-top: 1rem;">Checking price...</div>
     </form>
 
 
@@ -130,69 +136,130 @@
 ---Footer section ends-----
 
 ---Custom js file link---
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+  const routesByStart = /*[[${routesByStart}]]*/ {};
 
-  function checkPrice() {
-     alert("Clicked Check Price function");
+  function formatPrice(price) {
+    return `INR ${Number(price).toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
 
+  function populateDestinationOptions() {
+    const fromSelect = document.getElementById('bstart');
+    const toSelect = document.getElementById('bEnd');
+    const selectedStart = fromSelect.value.trim();
+    const previousSelection = toSelect.value;
+
+    toSelect.innerHTML = '<option value="">Select destination</option>';
+
+    if (!selectedStart) {
+      return;
+    }
+
+    const destinations = routesByStart[selectedStart] || [];
+
+    destinations.forEach((destination) => {
+      const option = document.createElement('option');
+      option.value = destination;
+      option.textContent = destination;
+      toSelect.appendChild(option);
+    });
+
+    if (destinations.includes(previousSelection)) {
+      toSelect.value = previousSelection;
+    }
+  }
+
+  async function checkPrice() {
     const formData = {
-      bstart: document.getElementById('bstart').value,
-      bend: document.getElementById('bEnd').value,
-      bnumofseat: document.getElementById('numOfSeat').value,
-      // Add more form fields here as needed
+      bstart: document.getElementById('bstart').value.trim(),
+      bend: document.getElementById('bEnd').value.trim(),
+      bnumofseat: Number(document.getElementById('numOfSeat').value),
     };
 
     const errorMessage = document.getElementById('error-message');
     const loadingIndicator = document.getElementById('loading-indicator');
+    const bookNowButton = document.getElementById('bookNowbtn');
 
-    errorMessage.textContent = ''; // Clear any previous error message
-    loadingIndicator.style.display = 'block'; // Show loading indicator
+    errorMessage.textContent = '';
+    loadingIndicator.style.display = 'block';
+    bookNowButton.style.visibility = 'hidden';
+
+    if (!formData.bstart || !formData.bend || !formData.bnumofseat) {
+      errorMessage.textContent = 'Please fill in all booking fields before checking the price.';
+      loadingIndicator.style.display = 'none';
+      return;
+    }
+
+    if (formData.bstart.toLowerCase() === formData.bend.toLowerCase()) {
+      errorMessage.textContent = 'Source and destination cannot be the same.';
+      loadingIndicator.style.display = 'none';
+      return;
+    }
 
     const jwtToken = localStorage.getItem('jwtToken');
 
-    if (jwtToken) {
-      fetch('http://localhost:8080/api/v1/demo-controller/checkPrice', {
-        method: 'GET',
+    if (!jwtToken) {
+      window.location.href = '/login';
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/v1/demo-controller/checkPrice', {
+        method: 'POST',
         headers: {
           'Authorization': `Bearer ${jwtToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then(data => {
-                const jwtToken = data.token;
+      });
 
-                // Store the JWT token in localStorage
-                localStorage.setItem('jwtToken', jwtToken);
+      if (!response.ok) {
+        throw new Error('Unable to check price for the selected route.');
+      }
 
-                // redirectToProtectedPage();
+      const price = await response.json();
+      sessionStorage.setItem('bookingData', JSON.stringify({
+        ...formData,
+        price,
+        flightName: 'Route estimate',
+        flightTime: 'Departure time assigned at confirmation',
+        flightRoute: `${formData.bstart} to ${formData.bend}`,
+      }));
 
-              })
-              .catch(error => {
-                errorMessage.textContent = 'Login failed. Please check your credentials.';
-                console.error('Error:', error.message);
-              })
-              .finally(() => {
-                loadingIndicator.style.display = 'none'; // Hide loading indicator
-              });
-    } else {
-      window.location.href = 'http://localhost:8080/api/v1/auth/login';
+      errorMessage.style.color = '#1f7a1f';
+      errorMessage.textContent = `Estimated total price: ${formatPrice(price)}`;
+      bookNowButton.style.visibility = 'visible';
+    } catch (error) {
+      errorMessage.style.color = '#c0392b';
+      errorMessage.textContent = error.message;
+      console.error('Error:', error.message);
+    } finally {
+      loadingIndicator.style.display = 'none';
     }
   }
 
 
   const myBtn = document.getElementById('btnclick');
+  const fromSelect = document.getElementById('bstart');
+  fromSelect.addEventListener('change', function () {
+    populateDestinationOptions();
+    document.getElementById('error-message').textContent = '';
+    document.getElementById('bookNowbtn').style.visibility = 'hidden';
+  });
+  document.getElementById('bEnd').addEventListener('change', function () {
+    document.getElementById('error-message').textContent = '';
+    document.getElementById('bookNowbtn').style.visibility = 'hidden';
+  });
   myBtn.addEventListener('click', function (event)
   {
     event.preventDefault();
     checkPrice();
   }, false);
+
+  populateDestinationOptions();
 
 
 </script>
