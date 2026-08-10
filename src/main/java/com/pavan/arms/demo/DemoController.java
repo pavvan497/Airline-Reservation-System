@@ -161,7 +161,6 @@ public class DemoController {
 
     // User only can access this method
     @PostMapping("/checkPrice")
-    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     public ResponseEntity<Double> checkPrice(@RequestBody BookingDto bookingDto) {
         return bookingService.checkPrice(bookingDto);
     }
@@ -171,6 +170,20 @@ public class DemoController {
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     public ResponseEntity<BookingConfirmationResponse> addBooking(@RequestBody BookingDto bookingdto) {
         return bookingService.addBooking(bookingdto);
+    }
+
+    @GetMapping("/my-bookings")
+    @ResponseBody
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
+    public List<Booking> getMyBookings() {
+        return bookingService.getCurrentUserBookings();
+    }
+
+    @PostMapping("/my-bookings/{bookingId}/cancel")
+    @ResponseBody
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
+    public ResponseEntity<BookingActionResponse> cancelBooking(@PathVariable int bookingId) {
+        return bookingService.cancelBooking(bookingId);
     }
 
 }

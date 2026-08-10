@@ -17,6 +17,7 @@
       <h2>Confirmation Details</h2>
       <p><strong>Booking Reference:</strong> <span id="booking-reference"></span></p>
       <p><strong>Ticket Number:</strong> <span id="ticket-number"></span></p>
+      <p><strong>Travel Date:</strong> <span id="travel-date"></span></p>
       <p><strong>Start Place:</strong> <span id="start-place"></span></p>
       <p><strong>Destination:</strong> <span id="destination"></span></p>
       <p><strong>No. of Tickets:</strong> <span id="ticket-count"></span></p>
@@ -26,6 +27,7 @@
 
     <div class="confirmation-actions">
       <a class="action-link" th:href="@{/}" href="/">Book Another Flight</a>
+      <a class="action-link" th:href="@{/my-flights}" href="/my-flights">View My Flights</a>
       <a class="action-link" th:href="@{/select}" href="/select">View Available Flights</a>
     </div>
   </div>
@@ -40,6 +42,18 @@
       })}`;
     }
 
+    function formatTravelDate(dateValue) {
+      if (!dateValue) {
+        return "Not provided";
+      }
+
+      return new Date(`${dateValue}T00:00:00`).toLocaleDateString("en-IN", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    }
+
     if (!confirmation) {
       document.getElementById("confirmation-message").textContent = "No booking confirmation was found. Please complete a booking first.";
       document.getElementById("confirmation-message").style.background = "rgba(255, 235, 238, 0.9)";
@@ -49,6 +63,7 @@
       document.getElementById("confirmation-message").textContent = confirmation.message;
       document.getElementById("booking-reference").textContent = confirmation.bookingReference;
       document.getElementById("ticket-number").textContent = confirmation.ticketNumber;
+      document.getElementById("travel-date").textContent = formatTravelDate(confirmation.travelDate);
       document.getElementById("start-place").textContent = confirmation.startPlace;
       document.getElementById("destination").textContent = confirmation.destination;
       document.getElementById("ticket-count").textContent = confirmation.ticketCount;

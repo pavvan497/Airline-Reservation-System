@@ -95,6 +95,11 @@ public class PageController {
         return "User/confirmation";
     }
 
+    @GetMapping("/my-flights")
+    public String myFlights() {
+        return "User/my-flights";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "User/login";

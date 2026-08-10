@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Flights</title>
+  <link rel="stylesheet" href="/css/payment.css" th:href="@{/css/payment.css}">
+</head>
+<body style="background-image: url('/images/bg.png')">
+  <div class="container flights-shell">
+    <h1>My Flights</h1>
+    <p class="page-subtitle">Review your booked trips, track upcoming journeys, and look back at past travel history in one place.</p>
+
+    <div class="demo-notice" id="flights-notice">
+      Sign in to load your flights.
+    </div>
+
+    <div class="flight-summary-grid">
+      <div class="summary-card">
+        <span>Upcoming</span>
+        <strong id="upcoming-count">0</strong>
+      </div>
+      <div class="summary-card">
+        <span>Past</span>
+        <strong id="past-count">0</strong>
+      </div>
+      <div class="summary-card">
+        <span>Undated</span>
+        <strong id="undated-count">0</strong>
+      </div>
+      <div class="summary-card">
+        <span>Cancelled</span>
+        <strong id="cancelled-count">0</strong>
+      </div>
+    </div>
+
+    <div class="booking-details">
+      <h2>Upcoming Flights</h2>
+      <div id="upcoming-flights" class="flight-list"></div>
+    </div>
+
+    <div class="booking-details">
+      <h2>Past Flights</h2>
+      <div id="past-flights" class="flight-list"></div>
+    </div>
+
+    <div class="booking-details">
+      <h2>Bookings Without Travel Date</h2>
+      <div id="undated-flights" class="flight-list"></div>
+    </div>
+
+    <div class="booking-details">
+      <h2>Cancelled Flights</h2>
+      <div id="cancelled-flights" class="flight-list"></div>
+    </div>
+
+    <div class="confirmation-actions">
+      <a class="action-link" th:href="@{/}" href="/">Book a Flight</a>
+      <a class="action-link" th:href="@{/contact}" href="/contact">Contact Support</a>
+    </div>
+  </div>
+
+  <script>
+    const jwtToken = localStorage.getItem("jwtToken");
+    const flightsNotice = document.getElementById("flights-notice");
+    let isCancelling = false;
+
+    function formatPrice(price) {
+      return `INR ${Number(price).toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`;
+    }
+
+    function formatTravelDate(dateValue) {
+      if (!dateValue) {
+        return "Travel date not available";
+      }
+
+      return new Date(`${dateValue}T00:00:00`).toLocaleDateString("en-IN", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    }
+
+    function createEmptyState(message) {
+      return `<div class="empty-state">${message}</div>`;
+    }
+
+    function canCancelFlight(flight) {
+      if ((flight.status || "CONFIRMED") === "CANCELLED") {
+        return false;
+      }
+
+      if (!flight.travelDate) {
+        return true;
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return new Date(`${flight.travelDate}T00:00:00`) >= today;
+    }
+
+    function renderFlightCards(containerId, flights, emptyMessage, statusLabel) {
+      const container = document.getElementById(containerId);
+
+      if (!flights.length) {
+        container.innerHTML = createEmptyState(emptyMessage);
+        return;
+      }
+
+      container.innerHTML = flights.map((flight) => `
+        <article class="flight-card">
+          <div class="flight-card-top">
+            <div>
+              <span class="status-pill">${statusLabel}</span>
+              <h3>${flight.bStart} to ${flight.bEnd}</h3>
+            </div>
+            <div class="flight-price">${formatPrice(flight.price)}</div>
+          </div>
+          <div class="flight-meta">
+            <span><strong>Date:</strong> ${formatTravelDate(flight.travelDate)}</span>
+            <span><strong>Passengers:</strong> ${flight.bNumOfseat}</span>
+            <span><strong>Booking Ref:</strong> ${flight.bookingReference || "Pending"}</span>
+            <span><strong>Ticket No:</strong> ${flight.ticketNumber || "Pending"}</span>
+          </div>
+          ${canCancelFlight(flight) ? `
+            <div class="flight-actions">
+              <button type="button" class="danger-link cancel-booking-btn" data-booking-id="${flight.id}" ${isCancelling ? "disabled" : ""}>Cancel Booking</button>
+            </div>
+          ` : ""}
+        </article>
+      `).join("");
+    }
+
+    async function cancelBooking(bookingId) {
+      if (!jwtToken || isCancelling) {
+        return;
+      }
+
+      const shouldCancel = window.confirm("Do you want to cancel this booking?");
+      if (!shouldCancel) {
+        return;
+      }
+
+      isCancelling = true;
+      flightsNotice.className = "demo-notice";
+      flightsNotice.textContent = "Cancelling your booking...";
+
+      try {
+        const response = await fetch(`/api/v1/demo-controller/my-bookings/${bookingId}/cancel`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${jwtToken}`,
+          },
+        });
+
+        const responseBody = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(responseBody.message || "Unable to cancel this booking.");
+        }
+
+        flightsNotice.className = "success-message";
+        flightsNotice.textContent = responseBody.message || "Booking cancelled successfully.";
+        await loadFlights();
+      } catch (error) {
+        flightsNotice.className = "demo-notice";
+        flightsNotice.style.background = "rgba(255, 235, 238, 0.92)";
+        flightsNotice.style.borderColor = "#e09ba7";
+        flightsNotice.style.color = "#8a1f2f";
+        flightsNotice.textContent = error.message;
+      } finally {
+        isCancelling = false;
+      }
+    }
+
+    async function loadFlights() {
+      if (!jwtToken) {
+        flightsNotice.textContent = "Please log in first to view your booked flights.";
+        flightsNotice.style.background = "rgba(255, 243, 205, 0.92)";
+        flightsNotice.style.borderColor = "#f0c36d";
+        flightsNotice.style.color = "#7c5900";
+        renderFlightCards("upcoming-flights", [], "No upcoming flights yet.", "Upcoming");
+        renderFlightCards("past-flights", [], "No past flights found.", "Past");
+        renderFlightCards("undated-flights", [], "No undated bookings found.", "Undated");
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/v1/demo-controller/my-bookings", {
+          headers: {
+            "Authorization": `Bearer ${jwtToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to load your flights right now.");
+        }
+
+        const flights = await response.json();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const cancelledFlights = flights.filter((flight) => (flight.status || "CONFIRMED") === "CANCELLED");
+        const activeFlights = flights.filter((flight) => (flight.status || "CONFIRMED") !== "CANCELLED");
+        const upcomingFlights = activeFlights.filter((flight) => flight.travelDate && new Date(`${flight.travelDate}T00:00:00`) >= today);
+        const pastFlights = activeFlights.filter((flight) => flight.travelDate && new Date(`${flight.travelDate}T00:00:00`) < today);
+        const undatedFlights = activeFlights.filter((flight) => !flight.travelDate);
+
+        document.getElementById("upcoming-count").textContent = upcomingFlights.length;
+        document.getElementById("past-count").textContent = pastFlights.length;
+        document.getElementById("undated-count").textContent = undatedFlights.length;
+        document.getElementById("cancelled-count").textContent = cancelledFlights.length;
+
+        flightsNotice.textContent = flights.length
+          ? "Your booking history is ready."
+          : "No flights booked yet. Once you complete a booking, it will appear here.";
+        flightsNotice.className = flights.length ? "success-message" : "demo-notice";
+        flightsNotice.style.background = "";
+        flightsNotice.style.borderColor = "";
+        flightsNotice.style.color = "";
+
+        renderFlightCards("upcoming-flights", upcomingFlights, "No upcoming flights yet.", "Upcoming");
+        renderFlightCards("past-flights", pastFlights, "No past flights found.", "Past");
+        renderFlightCards("undated-flights", undatedFlights, "Older bookings without a travel date will appear here.", "Undated");
+        renderFlightCards("cancelled-flights", cancelledFlights, "No cancelled flights yet.", "Cancelled");
+      } catch (error) {
+        flightsNotice.textContent = error.message;
+        flightsNotice.style.background = "rgba(255, 235, 238, 0.92)";
+        flightsNotice.style.borderColor = "#e09ba7";
+        flightsNotice.style.color = "#8a1f2f";
+        renderFlightCards("upcoming-flights", [], "No upcoming flights yet.", "Upcoming");
+        renderFlightCards("past-flights", [], "No past flights found.", "Past");
+        renderFlightCards("undated-flights", [], "No undated bookings found.", "Undated");
+        renderFlightCards("cancelled-flights", [], "No cancelled flights yet.", "Cancelled");
+      }
+    }
+
+    document.addEventListener("click", function (event) {
+      const button = event.target.closest(".cancel-booking-btn");
+      if (!button) {
+        return;
+      }
+
+      cancelBooking(button.dataset.bookingId);
+    });
+
+    loadFlights();
+  </script>
+</body>
+</html>

@@ -130,6 +130,126 @@ h2 {
   justify-content: center;
 }
 
+.flights-shell {
+  max-width: 1080px;
+}
+
+.flight-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  border-radius: 22px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(13, 139, 122, 0.12), rgba(18, 162, 165, 0.08));
+  border: 1px solid rgba(13, 139, 122, 0.18);
+}
+
+.summary-card span {
+  display: block;
+  color: #506771;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.summary-card strong {
+  font-size: 2rem;
+  color: #17313a;
+}
+
+.flight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.flight-card {
+  border-radius: 18px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(23, 49, 58, 0.1);
+  box-shadow: 0 14px 28px rgba(23, 49, 58, 0.08);
+}
+
+.flight-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.flight-card h3 {
+  margin: 10px 0 0;
+  color: #17313a;
+  font-size: 1.25rem;
+}
+
+.flight-price {
+  color: #0d8b7a;
+  font-size: 1.15rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.flight-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  color: #3f5d67;
+  font-size: 0.96rem;
+}
+
+.flight-actions {
+  margin-top: 16px;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(13, 139, 122, 0.12);
+  color: #0d6f63;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.danger-link {
+  background: linear-gradient(135deg, #b7334c, #de5c6e);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  padding: 11px 16px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 16px 28px rgba(183, 51, 76, 0.18);
+}
+
+.danger-link:hover {
+  background: linear-gradient(135deg, #98263d, #c54d63);
+}
+
+.danger-link:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.empty-state {
+  border-radius: 18px;
+  border: 1px dashed rgba(23, 49, 58, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+  color: #506771;
+  padding: 20px;
+  text-align: center;
+}
+
 .action-link {
   background: linear-gradient(135deg, #0d8b7a, #12a2a5);
   border: none;
@@ -165,6 +285,15 @@ h2 {
   }
 
   .confirmation-actions {
+    flex-direction: column;
+  }
+
+  .flight-summary-grid,
+  .flight-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .flight-card-top {
     flex-direction: column;
   }
 }

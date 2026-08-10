@@ -8,6 +8,18 @@ function formatPrice(price) {
   })}`;
 }
 
+function formatTravelDate(dateValue) {
+  if (!dateValue) {
+    return "Not selected";
+  }
+
+  return new Date(`${dateValue}T00:00:00`).toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 function updateBookingDetails() {
   if (!bookingData) {
     paymentMessage.textContent = "No booking details were found. Please start again from the home page.";
@@ -18,6 +30,7 @@ function updateBookingDetails() {
 
   document.getElementById("airplane-type").textContent = bookingData.flightName || "Available flight";
   document.getElementById("departure-time").textContent = bookingData.flightTime || "Assigned at confirmation";
+  document.getElementById("travel-date").textContent = formatTravelDate(bookingData.travelDate);
   document.getElementById("start-place").textContent = bookingData.bstart;
   document.getElementById("destination").textContent = bookingData.bend;
   document.getElementById("ticket-count").textContent = bookingData.bnumofseat;

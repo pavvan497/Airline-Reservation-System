@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 @Data
 @Builder
@@ -26,5 +29,9 @@ public class Booking {
     @Column(unique = true)
     private String bookingReference;
     private String ticketNumber;
+    private LocalDate travelDate;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
+    private LocalDateTime cancelledAt;
 
 }

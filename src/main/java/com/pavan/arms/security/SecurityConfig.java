@@ -33,6 +33,7 @@ public class SecurityConfig {
                                 "/ticket",
                                 "/payment",
                                 "/confirmation",
+                                "/my-flights",
                                 "/login",
                                 "/registration",
                                 "/admin/**",
@@ -44,6 +45,7 @@ public class SecurityConfig {
                                 "/favicon.ico"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/demo-controller/indexForRegistation").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/demo-controller/checkPrice").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

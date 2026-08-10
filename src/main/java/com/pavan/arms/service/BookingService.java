@@ -2,9 +2,11 @@ package com.pavan.arms.service;
 
 
 import com.pavan.arms.dto.BookingDto;
+import com.pavan.arms.dto.BookingActionResponse;
 import com.pavan.arms.dto.BookingConfirmationResponse;
 import com.pavan.arms.entity.AirPlane;
 import com.pavan.arms.entity.Booking;
+import com.pavan.arms.entity.BookingStatus;
 import com.pavan.arms.repo.BookingRepo;
 import com.pavan.arms.repo.PlaneRepo;
 import lombok.RequiredArgsConstructor;
@@ -12,17 +14,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
 public class BookingService {
-    private static final double BASE_FARE_PER_KM = 12.0;
+    private static final double BASE_FARE_PER_KM = 10.0;
     private static final String BOOKING_REFERENCE_PREFIX = "ARMS";
     private static final String TICKET_NUMBER_PREFIX = "TKT";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -34,9 +39,22 @@ public class BookingService {
         return bookingRepo.findAll();
     }
 
+    public List<Booking> getCurrentUserBookings() {
+        String currentUserEmail = resolveCurrentUserEmail();
+        return bookingRepo.findByUserEmailOrderByTravelDateDescIdDesc(currentUserEmail)
+                .stream()
+                .sorted(Comparator
+                        .comparing(Booking::getTravelDate, Comparator.nullsLast(Comparator.reverseOrder()))
+                        .thenComparing(Booking::getId, Comparator.reverseOrder()))
+                .toList();
+    }
+
 
     public ResponseEntity<Double> checkPrice(BookingDto bookingdto) {
         if (hasSameRouteEndpoints(bookingdto)) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (!isValidTravelDate(bookingdto)) {
             return ResponseEntity.badRequest().build();
         }
         AirPlane findPlane =planeIsAvilable(bookingdto);
@@ -62,11 +80,19 @@ public class BookingService {
         return numOfKm * bnumOfseat * BASE_FARE_PER_KM;
     }
 
+    @Transactional
     public ResponseEntity<BookingConfirmationResponse> addBooking(BookingDto bookingdto) {
         if (hasSameRouteEndpoints(bookingdto)) {
             return ResponseEntity.badRequest().body(
                     BookingConfirmationResponse.builder()
                             .message("Source and destination cannot be the same.")
+                            .build()
+            );
+        }
+        if (!isValidTravelDate(bookingdto)) {
+            return ResponseEntity.badRequest().body(
+                    BookingConfirmationResponse.builder()
+                            .message("Please choose a valid travel date for today or later.")
                             .build()
             );
         }
@@ -78,9 +104,12 @@ public class BookingService {
             booking.setBStart(bookingdto.getBstart());
             booking.setBEnd(bookingdto.getBend());
             booking.setBNumOfseat(bookingdto.getBnumofseat());
+            booking.setTravelDate(bookingdto.getTravelDate());
             booking.setUserEmail(resolveCurrentUserEmail());
             booking.setBookingReference(generateBookingReference());
             booking.setTicketNumber(generateTicketNumber());
+            booking.setStatus(BookingStatus.CONFIRMED);
+            booking.setCancelledAt(null);
 
            if(findPlane.getAvlSeat() - bookingdto.getBnumofseat() >= 0){
                bookingRepo.save(booking);
@@ -103,6 +132,7 @@ public class BookingService {
                            .ticketCount(booking.getBNumOfseat())
                            .totalPrice(booking.getPrice())
                            .userEmail(booking.getUserEmail())
+                           .travelDate(booking.getTravelDate())
                            .build()
            );
         }else {
@@ -112,6 +142,62 @@ public class BookingService {
                             .build()
             );
         }
+    }
+
+    @Transactional
+    public ResponseEntity<BookingActionResponse> cancelBooking(int bookingId) {
+        Booking booking = bookingRepo.findById(bookingId).orElse(null);
+        if (booking == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String currentUserEmail = resolveCurrentUserEmail();
+        if (booking.getUserEmail() == null || !booking.getUserEmail().equalsIgnoreCase(currentUserEmail)) {
+            return ResponseEntity.status(403).body(
+                    BookingActionResponse.builder()
+                            .message("You can only cancel your own bookings.")
+                            .bookingId(bookingId)
+                            .build()
+            );
+        }
+
+        if (booking.getStatus() == BookingStatus.CANCELLED) {
+            return ResponseEntity.badRequest().body(
+                    BookingActionResponse.builder()
+                            .message("This booking has already been cancelled.")
+                            .bookingId(bookingId)
+                            .bookingStatus(BookingStatus.CANCELLED.name())
+                            .build()
+            );
+        }
+
+        if (booking.getTravelDate() != null && booking.getTravelDate().isBefore(LocalDate.now())) {
+            return ResponseEntity.badRequest().body(
+                    BookingActionResponse.builder()
+                            .message("Past flights cannot be cancelled.")
+                            .bookingId(bookingId)
+                            .bookingStatus(booking.getStatus() == null ? BookingStatus.CONFIRMED.name() : booking.getStatus().name())
+                            .build()
+            );
+        }
+
+        AirPlane flight = planeRepo.findByStartAndEndIgnoreCase(booking.getBStart(), booking.getBEnd());
+        if (flight != null) {
+            flight.setAvlSeat(flight.getAvlSeat() + booking.getBNumOfseat());
+            planeRepo.save(flight);
+        }
+
+        booking.setStatus(BookingStatus.CANCELLED);
+        booking.setCancelledAt(LocalDateTime.now());
+        bookingRepo.save(booking);
+
+        return ResponseEntity.ok(
+                BookingActionResponse.builder()
+                        .message("Your booking has been cancelled successfully.")
+                        .bookingId(bookingId)
+                        .bookingStatus(BookingStatus.CANCELLED.name())
+                        .build()
+        );
     }
 
     private String resolveCurrentUserEmail() {
@@ -127,6 +213,13 @@ public class BookingService {
             return false;
         }
         return bookingdto.getBstart().trim().equalsIgnoreCase(bookingdto.getBend().trim());
+    }
+
+    private boolean isValidTravelDate(BookingDto bookingdto) {
+        if (bookingdto == null || bookingdto.getTravelDate() == null) {
+            return false;
+        }
+        return !bookingdto.getTravelDate().isBefore(LocalDate.now());
     }
 
     private String generateBookingReference() {

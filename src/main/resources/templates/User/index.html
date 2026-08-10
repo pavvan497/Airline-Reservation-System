@@ -17,6 +17,7 @@
   <nav class="navbar">
     <a th:href="@{/}" href="/">Home</a>
     <a th:href="@{/#book-form}" href="/#book-form">Booking</a>
+    <a th:href="@{/my-flights}" href="/my-flights">My Flights</a>
     <a th:href="@{/contact}" href="/contact">contact</a>
   </nav>
   <a th:href="@{/login}" href="/login"><img src="../../static/images/avatar.svg" th:src="@{/images/avatar.svg}" width="30px" height="30px"/></a>
@@ -27,17 +28,51 @@
 <section class="home" id="home">
   <div class="home-slider">
     <div class="slide">
-      <div class="box" >
+      <div class="box">
         <div class="content">
-          <h3>Fly with us</h3>
-          <p>Connecting people, places, and cultures.</p>
-          <a href="#book-form" class="btn">Book now</a>
+          <span class="eyebrow">Premium journeys across India and beyond</span>
+          <h1>Fly with confidence, comfort, and style.</h1>
+          <p>Connecting people, places, and cultures with a smoother booking experience and dependable service from takeoff to touchdown.</p>
+          <div class="hero-actions">
+            <a href="#book-form" class="btn">Book now</a>
+            <a th:href="@{/contact}" href="/contact" class="btn btn-secondary">Contact us</a>
+          </div>
+          <div class="hero-highlights">
+            <div class="hero-chip"><i class="fa-solid fa-shield-heart"></i> Safe journeys</div>
+            <div class="hero-chip"><i class="fa-solid fa-clock"></i> On-time support</div>
+            <div class="hero-chip"><i class="fa-solid fa-route"></i> Smart route booking</div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   </div>
 </section>
 <!-----home section ends------>
+
+<section class="home-overview">
+  <div class="overview-card">
+    <span class="overview-label">Why choose Pawar Skyways</span>
+    <h2>Designed to make every trip feel effortless.</h2>
+    <p>From quick route selection to transparent pricing, the homepage now guides travelers naturally from inspiration to booking.</p>
+  </div>
+  <div class="overview-grid">
+    <div class="overview-item">
+      <i class="fa-solid fa-plane-circle-check"></i>
+      <h3>Trusted flights</h3>
+      <p>Clean booking flow with better clarity at every step.</p>
+    </div>
+    <div class="overview-item">
+      <i class="fa-solid fa-wallet"></i>
+      <h3>Clear pricing</h3>
+      <p>Check route estimates before moving ahead to payment.</p>
+    </div>
+    <div class="overview-item">
+      <i class="fa-solid fa-headset"></i>
+      <h3>Helpful support</h3>
+      <p>Fast access to contact details and customer assistance.</p>
+    </div>
+  </div>
+</section>
 
 <!-----Book section starts----->
 <section class="book" id="book">
@@ -51,6 +86,7 @@
     <span>o</span>
     <span>w</span>
   </h1>
+  <p class="booking-subtitle">Choose your route, select passengers, and get your estimated fare in seconds.</p>
 </section>
 <section class="book-form" id="book-form">
   <form id="bookingForm">
@@ -75,6 +111,10 @@
 <!--      <span><i class="fa-solid fa-calendar-days"></i> Return</span>-->
 <!--      <input type="date" >-->
 
+    <div class="inputBox">
+      <span><i class="fa-solid fa-calendar-days"></i> Travel date</span>
+      <input type="date" id="travelDate">
+    </div>
     <div class="inputBox">
       <span><i class="fa-solid fa-ticket"></i> Count</span>
       <input type="number" placeholder=" passengers" value="" id="numOfSeat">
@@ -173,10 +213,12 @@
   }
 
   async function checkPrice() {
+    const travelDate = document.getElementById('travelDate').value;
     const formData = {
       bstart: document.getElementById('bstart').value.trim(),
       bend: document.getElementById('bEnd').value.trim(),
       bnumofseat: Number(document.getElementById('numOfSeat').value),
+      travelDate,
     };
 
     const errorMessage = document.getElementById('error-message');
@@ -187,8 +229,14 @@
     loadingIndicator.style.display = 'block';
     bookNowButton.style.visibility = 'hidden';
 
-    if (!formData.bstart || !formData.bend || !formData.bnumofseat) {
+    if (!formData.bstart || !formData.bend || !formData.bnumofseat || !formData.travelDate) {
       errorMessage.textContent = 'Please fill in all booking fields before checking the price.';
+      loadingIndicator.style.display = 'none';
+      return;
+    }
+
+    if (new Date(`${formData.travelDate}T00:00:00`) < new Date(new Date().toDateString())) {
+      errorMessage.textContent = 'Please choose a travel date for today or later.';
       loadingIndicator.style.display = 'none';
       return;
     }
@@ -199,24 +247,22 @@
       return;
     }
 
-    const jwtToken = localStorage.getItem('jwtToken');
-
-    if (!jwtToken) {
-      window.location.href = '/login';
-      return;
-    }
-
     try {
       const response = await fetch('/api/v1/demo-controller/checkPrice', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${jwtToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error('No registered flight is available for the selected route.');
+        }
+        if (response.status === 400) {
+          throw new Error('Please select a valid route, travel date, and passenger count.');
+        }
         throw new Error('Unable to check price for the selected route.');
       }
 
@@ -253,12 +299,17 @@
     document.getElementById('error-message').textContent = '';
     document.getElementById('bookNowbtn').style.visibility = 'hidden';
   });
+  document.getElementById('travelDate').addEventListener('change', function () {
+    document.getElementById('error-message').textContent = '';
+    document.getElementById('bookNowbtn').style.visibility = 'hidden';
+  });
   myBtn.addEventListener('click', function (event)
   {
     event.preventDefault();
     checkPrice();
   }, false);
 
+  document.getElementById('travelDate').min = new Date().toISOString().split('T')[0];
   populateDestinationOptions();
 
 
