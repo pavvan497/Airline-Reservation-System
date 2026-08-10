@@ -5,7 +5,7 @@ Repository Link: [https://github.com/pavvan497/Airline-Reservation-System.git](h
 
 The Airline Reservation Management System is a web-based application that streamlines the process of flight booking and reservation management. It offers a convenient interface for users to search and book flights, check available seats, manage reservations, and handle cancellations. The system also provides airline administrators with tools to manage flights, seat availability, and passenger information.
 
-![Project Screenshot](src/main/resources/static/images/background.jpg)
+![Project Screenshot](src/main/resources/static/images/background.png)
 
 
 
